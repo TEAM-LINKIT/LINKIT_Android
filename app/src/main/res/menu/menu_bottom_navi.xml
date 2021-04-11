@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_community"
+        android:icon="@drawable/bottom_navi_home"
+        android:title="Community"/>
+    <item
+        android:id="@+id/menu_portfolio"
+        android:icon="@drawable/bottom_navi_portfolio"
+        android:title="Portfolio"/>
+    <item
+        android:id="@+id/menu_chat"
+        android:icon="@drawable/bottom_navi_chat"
+        android:title="Chat"/>
+    <item
+        android:id="@+id/menu_mypage"
+        android:icon="@drawable/bottom_navi_mypage"
+        android:title="Mypage"/>
+</menu>
