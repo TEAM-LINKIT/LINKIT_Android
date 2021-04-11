@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="part_array">
+        <item>기획</item>
+        <item>디자인</item>
+        <item>프론트엔드 개발</item>
+        <item>백엔드 개발</item>
+    </string-array>
+</resources>

@@ -15,6 +15,7 @@
         app:itemIconTint="@color/bottom_navi_color"
         app:labelVisibilityMode="unlabeled"
         app:itemIconSize="20dp"
+        app:itemRippleColor="@android:color/transparent"
         app:layout_constraintHeight_percent="0.09625"
         app:layout_constraintBottom_toBottomOf="parent" />
 
