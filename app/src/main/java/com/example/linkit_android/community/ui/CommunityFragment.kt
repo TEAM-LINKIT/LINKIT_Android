@@ -7,13 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkit_android.R
+import com.example.linkit_android.community.adapter.CommunityAdapter
+import com.example.linkit_android.community.adapter.CommunityData
 import com.example.linkit_android.databinding.FragmentCommunityBinding
 
 class CommunityFragment : Fragment() {
 
     private var _binding: FragmentCommunityBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var communityAdapter: CommunityAdapter
 
     private var selectPart = -1
 
@@ -29,6 +34,8 @@ class CommunityFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initPartSpinner()
+
+        initRecyclerView()
     }
 
     private fun initPartSpinner() {
@@ -51,6 +58,25 @@ class CommunityFragment : Fragment() {
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
         }
+    }
+
+    private fun initRecyclerView() {
+        communityAdapter = CommunityAdapter(context!!)
+
+        binding.recyclerviewCommunity.apply {
+            adapter = communityAdapter
+            layoutManager = LinearLayoutManager(context!!)
+        }
+
+        communityAdapter.data = mutableListOf(
+            CommunityData("함께 웹 개발 하실 분 구해요!", "기획 · 디자인 · 프론트엔드 · 백엔드"),
+            CommunityData("함께 토이프로젝트 진행할 고등학생 있나요?", "프론트엔드"),
+            CommunityData("한이음 공모전 같이 나갈 사람 있나요?", "프론트엔드 · 백엔드"),
+            CommunityData("안녕하세요! 웹 개발 공모전 함께 나갈 고등학생 구합니다. 저도 고등학생입니다!", "기획 · 디자인 · 프론트엔드 · 백엔드"),
+            CommunityData("한이음 공모전 같이 나갈 사람 있나요?", "프론트엔드 · 백엔드"),
+            CommunityData("함께 웹 개발 하실 분 구해요!", "기획 · 디자인 · 프론트엔드 · 백엔드")
+        )
+        communityAdapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
