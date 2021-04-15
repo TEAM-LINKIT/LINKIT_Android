@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
-        <activity android:name=".main.ui.MainActivity"
+        <activity android:name=".upload.PostingActivity"
+            android:theme="@style/Theme.RedTheme" />
+        <activity
+            android:name=".main.ui.MainActivity"
             android:theme="@style/Theme.WhiteTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
