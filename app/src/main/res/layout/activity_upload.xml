@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".upload.ui.UploadActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="23dp"
+            android:src="@drawable/ic_arrow_white_back"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.0388" />
+
+        <TextView
+            android:id="@+id/btn_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/notosanskrmedium"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:padding="10dp"
+            android:text="업로드"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_back" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginBottom="19dp"
+            android:hint="제목을 입력해주세요"
+            android:textColorHint="@color/white_hint"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:fontFamily="@font/notosanskrbold"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:lineSpacingExtra="-2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_back" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="33dp"
+        android:background="@null"
+        android:fontFamily="@font/notosanskrregular"
+        android:gravity="start|top"
+        android:hint="내용을 입력해주세요"
+        android:includeFontPadding="false"
+        android:letterSpacing="-0.03"
+        android:lineSpacingExtra="-2dp"
+        android:textColor="@color/black_content"
+        android:textColorHint="@color/gray_content"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginLeft="22dp"
+            android:fontFamily="@font/notosanskrbold"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="프로젝트 기간 설정"
+            android:textColor="@color/black_content"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="시작일"
+                    android:textColor="@color/red_main"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:fontFamily="@font/notosanskrmedium"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="2021년 3월"
+                    android:textColor="@color/black_content"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                android:src="@drawable/ic_polygon"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_start_date"
+                app:layout_constraintStart_toEndOf="@+id/btn_start_date"
+                app:layout_constraintTop_toTopOf="@+id/btn_start_date" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintTop_toTopOf="@+id/imageView7">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="시작일"
+                    android:textColor="@color/red_main"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintStart_toEndOf="@+id/imageView6"
+                    app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:fontFamily="@font/notosanskrmedium"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="2021년 3월"
+                    android:textColor="@color/black_content"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                    app:layout_constraintStart_toEndOf="@+id/textView8"
+                    app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:fontFamily="@font/notosanskrbold"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="모집 파트 및 인원 설정"
+            android:textColor="@color/black_content"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+        <TextView
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:padding="10dp"
+            android:fontFamily="@font/notosanskrmedium"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="추가"
+            android:textColor="@color/red_main"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="43dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintlayout_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+                <TextView
+                    android:id="@+id/tv_label_plan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_part_label"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:paddingHorizontal="6dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="2dp"
+                    android:text="기획"
+                    android:textColor="@color/red_main"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_count_plan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="1명"
+                    android:textColor="@color/black_content"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_label_plan"
+                    app:layout_constraintStart_toEndOf="@+id/tv_label_plan"
+                    app:layout_constraintTop_toTopOf="@+id/tv_label_plan" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintlayout_design"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:layout_constraintStart_toStartOf="@+id/constraintlayout_plan"
+                app:layout_constraintTop_toBottomOf="@+id/constraintlayout_plan">
+
+                <TextView
+                    android:id="@+id/tv_label_design"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_part_label"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:paddingHorizontal="7dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="2dp"
+                    android:text="디자인"
+                    android:textColor="@color/red_main"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_count_design"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="2명"
+                    android:textColor="@color/black_content"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_label_design"
+                    app:layout_constraintStart_toEndOf="@+id/tv_label_design"
+                    app:layout_constraintTop_toTopOf="@+id/tv_label_design" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintlayout_frontend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:layout_constraintStart_toStartOf="@+id/constraintlayout_design"
+                app:layout_constraintTop_toBottomOf="@+id/constraintlayout_design">
+
+                <TextView
+                    android:id="@+id/tv_label_frontend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_part_label"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:paddingHorizontal="7dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="2dp"
+                    android:text="프론트엔드 개발"
+                    android:textColor="@color/red_main"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_count_frontend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="4명"
+                    android:textColor="@color/black_content"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_label_frontend"
+                    app:layout_constraintStart_toEndOf="@+id/tv_label_frontend"
+                    app:layout_constraintTop_toTopOf="@+id/tv_label_frontend" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintlayout_backend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:layout_constraintStart_toStartOf="@+id/constraintlayout_frontend"
+                app:layout_constraintTop_toBottomOf="@+id/constraintlayout_frontend">
+
+                <TextView
+                    android:id="@+id/tv_label_backend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_part_label"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:paddingHorizontal="7dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="2dp"
+                    android:text="백엔드 개발"
+                    android:textColor="@color/red_main"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_count_backend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="3명"
+                    android:textColor="@color/black_content"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_label_backend"
+                    app:layout_constraintStart_toEndOf="@+id/tv_label_backend"
+                    app:layout_constraintTop_toTopOf="@+id/tv_label_backend" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

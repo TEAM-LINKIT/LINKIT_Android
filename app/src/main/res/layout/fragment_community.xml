@@ -334,10 +334,12 @@
             android:fontFamily="@font/notosanskrbold"
             android:includeFontPadding="false"
             android:text="글쓰기"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="20dp"
             android:textColor="@color/red_main"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/textView4"
-            app:layout_constraintEnd_toEndOf="@id/cardview_banner"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView4" />
 
         <androidx.recyclerview.widget.RecyclerView

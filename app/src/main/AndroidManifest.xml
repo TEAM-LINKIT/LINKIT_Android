@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
-        <activity android:name=".upload.PostingActivity"
+        <activity android:name=".upload.ui.UploadActivity"
+            android:theme="@style/Theme.RedTheme" />
+        <activity
+            android:name=".upload.ui.PostingActivity"
             android:theme="@style/Theme.RedTheme" />
         <activity
             android:name=".main.ui.MainActivity"
