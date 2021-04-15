@@ -1,5 +1,6 @@
 package com.example.linkit_android.community.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.example.linkit_android.R
 import com.example.linkit_android.community.adapter.CommunityAdapter
 import com.example.linkit_android.community.adapter.CommunityData
 import com.example.linkit_android.databinding.FragmentCommunityBinding
+import com.example.linkit_android.upload.ui.UploadActivity
 
 class CommunityFragment : Fragment() {
 
@@ -36,6 +38,8 @@ class CommunityFragment : Fragment() {
         initPartSpinner()
 
         initRecyclerView()
+
+        goToUploadActivity()
     }
 
     private fun initPartSpinner() {
@@ -77,6 +81,13 @@ class CommunityFragment : Fragment() {
             CommunityData("함께 웹 개발 하실 분 구해요!", "기획 · 디자인 · 프론트엔드 · 백엔드")
         )
         communityAdapter.notifyDataSetChanged()
+    }
+
+    private fun goToUploadActivity() {
+        binding.btnUpload.setOnClickListener {
+            val intent = Intent(context!!, UploadActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroyView() {
