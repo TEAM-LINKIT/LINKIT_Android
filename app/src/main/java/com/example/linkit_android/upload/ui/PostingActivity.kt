@@ -1,4 +1,4 @@
-package com.example.linkit_android.upload
+package com.example.linkit_android.upload.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
