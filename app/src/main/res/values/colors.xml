@@ -15,6 +15,7 @@
     <color name="red_light_label">#96FFD4D0</color>
     <color name="red_light_profile">#82F9978E</color>
     <color name="red_light_shadow">#9AF9978E</color>
+    <color name="gray_light_shadow">#409F9F9F</color>
     <color name="gray_btn">#E0E0E0</color>
     <color name="red_gradient">#F2F86B5F</color>
     <color name="gray_content">#ADAEB0</color>
