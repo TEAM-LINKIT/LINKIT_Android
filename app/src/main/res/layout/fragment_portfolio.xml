@@ -46,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="28dp"
-            android:outlineAmbientShadowColor="@color/gray_light_shadow"
-            android:outlineSpotShadowColor="@color/gray_light_shadow"
+            android:outlineAmbientShadowColor="@color/gray_shadow"
+            android:outlineSpotShadowColor="@color/gray_shadow"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -138,8 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:outlineAmbientShadowColor="@color/gray_light_shadow"
-            android:outlineSpotShadowColor="@color/gray_light_shadow"
+            android:outlineAmbientShadowColor="@color/gray_shadow"
+            android:outlineSpotShadowColor="@color/gray_shadow"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -302,6 +302,9 @@
                     android:layout_marginEnd="21dp"
                     android:layout_marginRight="21dp"
                     android:layout_marginBottom="13dp"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_project"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -380,6 +383,21 @@
                     app:layout_constraintTop_toTopOf="@+id/textView14"
                     app:layout_constraintWidth_percent="0.03611" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_tool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="16dp"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_tag"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
                 <TextView
                     android:id="@+id/tv_none_tool"
                     android:layout_width="match_parent"
@@ -412,10 +430,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="36dp"
             android:outlineAmbientShadowColor="@color/gray_light_shadow"
             android:outlineSpotShadowColor="@color/gray_light_shadow"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview_tool">
@@ -453,6 +473,21 @@
                     app:layout_constraintTop_toTopOf="@+id/textView15"
                     app:layout_constraintWidth_percent="0.03611" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="16dp"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_tag"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
                 <TextView
                     android:id="@+id/tv_none_field"
                     android:layout_width="match_parent"
@@ -467,6 +502,7 @@
                     android:text="내용을 입력해주세요"
                     android:textColor="@color/gray_content"
                     android:textSize="13dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
