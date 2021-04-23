@@ -339,6 +339,7 @@
                     android:layout_marginBottom="13dp"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
+                    tools:listitem="@layout/item_project"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -412,6 +413,7 @@
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="16dp"
                     android:overScrollMode="never"
+                    tools:listitem="@layout/item_tag"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -487,6 +489,7 @@
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="16dp"
                     android:overScrollMode="never"
+                    tools:listitem="@layout/item_tag"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -560,11 +563,12 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="7dp"
-                    android:layout_marginEnd="21dp"
-                    android:layout_marginRight="21dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="13dp"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
+                    tools:listitem="@layout/item_project"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -589,6 +593,64 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- 추천 버튼 -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="41dp"
+            android:outlineAmbientShadowColor="@color/red_light_shadow"
+            android:outlineSpotShadowColor="@color/red_light_shadow"
+            app:cardBackgroundColor="@color/red_main"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_recommend">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/notosanskrbold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:lineSpacingExtra="-2dp"
+                    android:text="완두콩님,\n강희원님을 추천해주세요."
+                    android:textColor="@color/white"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_like"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.05" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
