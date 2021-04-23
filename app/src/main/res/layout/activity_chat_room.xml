@@ -71,9 +71,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="19dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="16dp"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
+        android:paddingBottom="70dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_part" />
@@ -82,7 +84,7 @@
         android:id="@+id/constraintLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/background_blur"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -91,14 +93,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="19dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:outlineAmbientShadowColor="@color/gray_shadow"
             android:outlineSpotShadowColor="@color/gray_shadow"
             app:cardCornerRadius="25dp"
             app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -106,10 +110,13 @@
 
                 <EditText
                     android:id="@+id/et_chat_content"
-                    android:layout_width="120dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
                     android:layout_marginStart="23dp"
                     android:layout_marginLeft="23dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginRight="14dp"
                     android:background="@null"
                     android:fontFamily="@font/notosanskrmedium"
                     android:hint="메시지를 입력하세요"
@@ -120,6 +127,7 @@
                     android:textColorHint="@color/gray_chat_hint"
                     android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_send"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,9 +135,9 @@
                     android:id="@+id/btn_send"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_marginVertical="9dp"
                     android:layout_marginEnd="14dp"
                     android:layout_marginRight="14dp"
-                    android:layout_marginVertical="9dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
