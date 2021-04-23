@@ -10,33 +10,107 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        tools:context=".portfolio.ui.PortfolioFragment">
+        tools:context=".profile.ui.ProfileActivity">
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="34dp"
-            android:fontFamily="@font/notosanskrbold"
-            android:includeFontPadding="false"
-            android:letterSpacing="-0.03"
-            android:text="내 포트폴리오"
-            android:textColor="@color/black_content"
-            android:textSize="20dp"
+            android:background="@drawable/background_radius_red"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/shape_oval"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="@+id/textView10"
-            app:layout_constraintWidth_percent="0.0138" />
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="23dp"
+                android:src="@drawable/ic_arrow_white_back"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.0388" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/img_cat"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_back"
+                app:layout_constraintWidth_percent="0.2861" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_chat"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@+id/img_profile"
+                app:layout_constraintWidth_percent="0.0833">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@color/white" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_chat_red"
+                    app:layout_constraintBottom_toBottomOf="@+id/circleImageView2"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/circleImageView2"
+                    app:layout_constraintStart_toStartOf="@+id/circleImageView2"
+                    app:layout_constraintTop_toTopOf="@+id/circleImageView2"
+                    app:layout_constraintWidth_percent="0.4666" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/notosanskrbold"
+                android:includeFontPadding="false"
+                android:letterSpacing="-0.03"
+                android:text="강희원"
+                android:textColor="@color/white"
+                android:textSize="21dp"
+                app:layout_constraintEnd_toEndOf="@+id/img_profile"
+                app:layout_constraintStart_toStartOf="@+id/img_profile"
+                app:layout_constraintTop_toBottomOf="@+id/img_profile" />
+
+            <TextView
+                android:id="@+id/tv_part"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/background_profile_label"
+                android:fontFamily="@font/notosanskrmedium"
+                android:includeFontPadding="false"
+                android:letterSpacing="-0.03"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="4dp"
+                android:text="프론트엔드 개발"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- 자기소개 -->
 
@@ -45,14 +119,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="26dp"
             android:outlineAmbientShadowColor="@color/gray_shadow"
             android:outlineSpotShadowColor="@color/gray_shadow"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -73,19 +147,6 @@
                     android:textSize="13dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/btn_edit_introduce"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_edit"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView11"
-                    app:layout_constraintWidth_percent="0.03611" />
 
                 <TextView
                     android:id="@+id/tv_content_introduce"
@@ -117,7 +178,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
-                    android:text="내용을 입력해주세요"
+                    android:text="작성된 내용이 없습니다"
                     android:textColor="@color/gray_content"
                     android:textSize="13dp"
                     android:visibility="gone"
@@ -165,19 +226,6 @@
                     android:textSize="13dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/btn_edit_edu"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_edit"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView12"
-                    app:layout_constraintWidth_percent="0.03611" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintlayout_content_edu"
@@ -230,7 +278,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
-                    android:text="내용을 입력해주세요"
+                    android:text="작성된 내용이 없습니다"
                     android:textColor="@color/gray_content"
                     android:textSize="13dp"
                     android:visibility="gone"
@@ -279,19 +327,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/btn_edit_project"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_edit"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView13"
-                    app:layout_constraintWidth_percent="0.03611" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_project"
                     android:layout_width="match_parent"
@@ -307,8 +342,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13"
-                    tools:listitem="@layout/item_project" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
                 <TextView
                     android:id="@+id/tv_none_project"
@@ -321,7 +355,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
-                    android:text="내용을 입력해주세요"
+                    android:text="작성된 내용이 없습니다"
                     android:textColor="@color/gray_content"
                     android:textSize="13dp"
                     android:visibility="gone"
@@ -370,19 +404,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/btn_edit_tool"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_edit"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView14"
-                    app:layout_constraintWidth_percent="0.03611" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_tool"
                     android:layout_width="match_parent"
@@ -392,7 +413,6 @@
                     android:layout_marginBottom="16dp"
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/item_tag"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -409,7 +429,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
-                    android:text="내용을 입력해주세요"
+                    android:text="작성된 내용이 없습니다"
                     android:textColor="@color/gray_content"
                     android:textSize="13dp"
                     android:visibility="gone"
@@ -435,7 +455,6 @@
             android:outlineSpotShadowColor="@color/gray_light_shadow"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview_tool">
@@ -460,19 +479,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/btn_edit_field"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_edit"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView15"
-                    app:layout_constraintWidth_percent="0.03611" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_field"
                     android:layout_width="match_parent"
@@ -482,7 +488,6 @@
                     android:layout_marginBottom="16dp"
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/item_tag"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -499,7 +504,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
-                    android:text="내용을 입력해주세요"
+                    android:text="작성된 내용이 없습니다"
                     android:textColor="@color/gray_content"
                     android:textSize="13dp"
                     android:visibility="gone"
@@ -507,6 +512,83 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- 받은 추천 -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:outlineAmbientShadowColor="@color/gray_light_shadow"
+            android:outlineSpotShadowColor="@color/gray_light_shadow"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_field">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/notosanskrbold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="받은 추천"
+                    android:textColor="@color/black_content"
+                    android:textSize="13dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="21dp"
+                    android:layout_marginRight="21dp"
+                    android:layout_marginBottom="13dp"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/tv_none_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="34dp"
+                    android:fontFamily="@font/notosanskrregular"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="받은 추천이 없습니다"
+                    android:textColor="@color/gray_content"
+                    android:textSize="13dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
