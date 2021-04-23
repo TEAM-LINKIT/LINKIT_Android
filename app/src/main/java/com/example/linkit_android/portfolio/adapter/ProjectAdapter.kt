@@ -2,6 +2,7 @@ package com.example.linkit_android.portfolio.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.linkit_android.R
@@ -17,7 +18,16 @@ class ProjectAdapter(private val context: Context) : RecyclerView.Adapter<Projec
 
     override fun onBindViewHolder(holder: ProjectViewHolder, position: Int) {
         holder.onBind(data[position])
+
+        setLinkBtnVisibility(holder, position)
     }
 
     override fun getItemCount(): Int = data.size
+
+    private fun setLinkBtnVisibility(holder: ProjectViewHolder, position: Int) {
+        // link 값이 false 일 때 link 버튼 invisible 처리
+        if (!data[position].link) {
+            holder.link.visibility = View.INVISIBLE
+        }
+    }
 }

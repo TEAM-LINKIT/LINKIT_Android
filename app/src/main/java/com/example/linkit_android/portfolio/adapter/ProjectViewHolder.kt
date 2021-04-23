@@ -11,6 +11,7 @@ class ProjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var projectImg: ImageView = itemView.findViewById(R.id.item_project_img)
     var title: TextView = itemView.findViewById(R.id.item_title)
     var content: TextView = itemView.findViewById(R.id.item_content)
+    var link: ImageView = itemView.findViewById(R.id.btn_link)
 
     fun onBind(data: ProjectData) {
         Glide.with(itemView).load(data.projectImg).into(projectImg)

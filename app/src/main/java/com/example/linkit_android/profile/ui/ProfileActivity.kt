@@ -1,12 +1,9 @@
-package com.example.linkit_android.portfolio.ui
+package com.example.linkit_android.profile.ui
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.linkit_android.databinding.FragmentPortfolioBinding
+import com.example.linkit_android.databinding.ActivityProfileBinding
 import com.example.linkit_android.portfolio.adapter.ProjectAdapter
 import com.example.linkit_android.portfolio.adapter.ProjectData
 import com.example.linkit_android.portfolio.adapter.TagAdapter
@@ -15,52 +12,54 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class PortfolioFragment : Fragment() {
+class ProfileActivity : AppCompatActivity() {
 
-    private var _binding: FragmentPortfolioBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityProfileBinding
 
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var toolAdapter: TagAdapter
     private lateinit var fieldAdapter: TagAdapter
+    private lateinit var recommendAdapter: ProjectAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPortfolioBinding.inflate(layoutInflater)
-        return binding.root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        setViewBinding()
 
         initProjectRecyclerView()
 
         initToolRecyclerView()
 
         initFieldRecyclerView()
+
+        initRecommendRecyclerView()
+    }
+
+    private fun setViewBinding() {
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
     }
 
     private fun initProjectRecyclerView() {
-        projectAdapter = ProjectAdapter(context!!)
+        projectAdapter = ProjectAdapter(this)
 
         binding.recyclerviewProject.apply {
             adapter = projectAdapter
-            layoutManager = LinearLayoutManager(context!!)
+            layoutManager = LinearLayoutManager(this@ProfileActivity)
         }
 
         projectAdapter.data = mutableListOf(
-                ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "DayBreak", "당신의 하루를 깨우는 습관 형성 앱", false),
-                ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "LINK IT", "IT 프로젝트 팀 빌딩 & 네트워킹 플랫폼", false)
+            ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "DayBreak", "당신의 하루를 깨우는 습관 형성 앱", true),
+            ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "LINK IT", "IT 프로젝트 팀 빌딩 & 네트워킹 플랫폼", true)
         )
         projectAdapter.notifyDataSetChanged()
     }
 
     private fun initToolRecyclerView() {
-        toolAdapter = TagAdapter(context!!)
+        toolAdapter = TagAdapter(this)
 
-        FlexboxLayoutManager(context!!).apply {
+        FlexboxLayoutManager(this).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -76,9 +75,9 @@ class PortfolioFragment : Fragment() {
     }
 
     private fun initFieldRecyclerView() {
-        fieldAdapter = TagAdapter(context!!)
+        fieldAdapter = TagAdapter(this)
 
-        FlexboxLayoutManager(context!!).apply {
+        FlexboxLayoutManager(this).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -93,8 +92,18 @@ class PortfolioFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun initRecommendRecyclerView() {
+        recommendAdapter = ProjectAdapter(this)
+
+        binding.recyclerviewRecommend.apply {
+            adapter = recommendAdapter
+            layoutManager = LinearLayoutManager(this@ProfileActivity)
+        }
+
+        recommendAdapter.data = mutableListOf(
+            ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "김안드", "강희원님을 추천합니다.", false),
+            ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "고구마", "재미있게 프로젝트 했습니다!", false)
+        )
+        recommendAdapter.notifyDataSetChanged()
     }
 }
