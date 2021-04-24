@@ -12,11 +12,20 @@ class PostingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setViewBinding()
+
+        initApplyBtn()
     }
 
     private fun setViewBinding() {
         binding = ActivityPostingBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+    }
+
+    private fun initApplyBtn() {
+        binding.btnApply.setOnClickListener {
+            val sendPortfolioDialog = SendPortfolioDialogFragment()
+            sendPortfolioDialog.show(supportFragmentManager, "send_portfolio_dialog")
+        }
     }
 }

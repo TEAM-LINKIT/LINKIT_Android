@@ -21,15 +21,17 @@
             android:theme="@style/Theme.RedTheme" />
         <activity
             android:name=".upload.ui.PostingActivity"
-            android:theme="@style/Theme.RedTheme" />
-        <activity
-            android:name=".main.ui.MainActivity"
-            android:theme="@style/Theme.WhiteTheme">
+            android:theme="@style/Theme.RedTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.ui.MainActivity"
+            android:theme="@style/Theme.WhiteTheme">
+
         </activity>
     </application>
 
