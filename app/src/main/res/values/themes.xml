@@ -25,4 +25,12 @@
         <item name="android:statusBarColor" tools:targetApi="m">@color/red_main</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
+
+    <!-- NumberPicker theme -->
+    <style name="NumberPickerTheme">
+        <item name="android:textSize">17dp</item>
+        <item name="android:textColor">@color/black_content</item>
+        <item name="android:fontFamily">@font/notosanskrmedium</item>
+        <item name="colorControlNormal">@android:color/transparent</item>
+    </style>
 </resources>
