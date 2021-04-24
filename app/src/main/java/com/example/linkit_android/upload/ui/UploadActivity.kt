@@ -12,11 +12,32 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setViewBinding()
+
+        initStartDateBtn()
+
+        initEndDateBtn()
     }
 
     private fun setViewBinding() {
         binding = ActivityUploadBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+    }
+
+    private fun initStartDateBtn() {
+        binding.btnStartDate.setOnClickListener {
+            showSettingDateDialog()
+        }
+    }
+
+    private fun initEndDateBtn() {
+        binding.btnEndDate.setOnClickListener {
+            showSettingDateDialog()
+        }
+    }
+
+    private fun showSettingDateDialog() {
+        val settingDateDialog = SettingDateDialogFragment()
+        settingDateDialog.show(supportFragmentManager, "setting_date_dialog")
     }
 }
