@@ -215,7 +215,7 @@
                     android:fontFamily="@font/notosanskrregular"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
-                    android:text="시작일"
+                    android:text="종료일"
                     android:textColor="@color/red_main"
                     android:textSize="13dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView6"
