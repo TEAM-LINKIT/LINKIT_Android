@@ -40,6 +40,8 @@ class PortfolioFragment : Fragment() {
         initToolRecyclerView()
 
         initFieldRecyclerView()
+
+        initToolEditBtn()
     }
 
     private fun initProjectRecyclerView() {
@@ -90,6 +92,13 @@ class PortfolioFragment : Fragment() {
         fieldAdapter.apply {
             data = mutableListOf("여기는 활동 분야 자리", "Android", "Kotlin", "GitHub", "Java")
             notifyDataSetChanged()
+        }
+    }
+
+    private fun initToolEditBtn() {
+        binding.btnEditTool.setOnClickListener {
+            val toolDialog = ToolDialogFragment()
+            toolDialog.show(childFragmentManager, "tool_dialog")
         }
     }
 
