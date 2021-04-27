@@ -23,4 +23,5 @@
     <color name="white_hint">#61FFFFFF</color>
     <color name="gray_label">#EBEBEB</color>
     <color name="gray_chat_hint">#C6C6C6</color>
+    <color name="gray_login">#F9F9F9</color>
 </resources>
