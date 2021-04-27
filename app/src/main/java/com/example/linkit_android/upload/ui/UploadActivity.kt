@@ -16,6 +16,8 @@ class UploadActivity : AppCompatActivity() {
         initStartDateBtn()
 
         initEndDateBtn()
+
+        initAddPartBtn()
     }
 
     private fun setViewBinding() {
@@ -39,5 +41,12 @@ class UploadActivity : AppCompatActivity() {
     private fun showSettingDateDialog() {
         val settingDateDialog = SettingDateDialogFragment()
         settingDateDialog.show(supportFragmentManager, "setting_date_dialog")
+    }
+
+    private fun initAddPartBtn() {
+        binding.btnAdd.setOnClickListener {
+            val selectPartDialog = SelectPartDialogFragment()
+            selectPartDialog.show(supportFragmentManager, "select_part_dialog")
+        }
     }
 }
