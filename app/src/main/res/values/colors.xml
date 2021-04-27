@@ -23,6 +23,7 @@
     <color name="white_hint">#61FFFFFF</color>
     <color name="gray_label">#EBEBEB</color>
     <color name="gray_chat_hint">#C6C6C6</color>
+    <color name="gray_login">#F9F9F9</color>
     <color name="gray_stepper">#D7D7D7</color>
     <color name="gray_stepper_divider">#F6F6F6</color>
 </resources>

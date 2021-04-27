@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
-        <activity android:name=".chatting.ui.ChatRoomActivity"
+        <activity android:name=".login.LoginActivity"></activity>
+        <activity
+            android:name=".chatting.ui.ChatRoomActivity"
             android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".profile.ui.ProfileActivity"
