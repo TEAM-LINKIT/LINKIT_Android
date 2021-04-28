@@ -42,6 +42,8 @@ class PortfolioFragment : Fragment() {
         initFieldRecyclerView()
 
         initToolEditBtn()
+
+        initFieldEditBtn()
     }
 
     private fun initProjectRecyclerView() {
@@ -99,6 +101,13 @@ class PortfolioFragment : Fragment() {
         binding.btnEditTool.setOnClickListener {
             val toolDialog = ToolDialogFragment()
             toolDialog.show(childFragmentManager, "tool_dialog")
+        }
+    }
+
+    private fun initFieldEditBtn() {
+        binding.btnEditField.setOnClickListener {
+            val fieldDialog = FieldDialogFragment()
+            fieldDialog.show(childFragmentManager, "field_dialog")
         }
     }
 
