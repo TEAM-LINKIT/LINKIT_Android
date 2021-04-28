@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".signup.SignUpActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,6 +57,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
             android:background="@null"
             android:fontFamily="@font/notosanskrregular"
             android:hint="아이디를 입력하세요 "
@@ -65,6 +68,7 @@
             android:textColor="@color/black_content"
             android:textColorHint="@color/gray_content"
             android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView19"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
@@ -99,6 +103,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
             android:background="@null"
             android:fontFamily="@font/notosanskrregular"
             android:hint="비밀번호를 입력하세요 "
@@ -108,6 +114,7 @@
             android:textColor="@color/black_content"
             android:textColorHint="@color/gray_content"
             android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView20"
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -142,6 +149,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
             android:background="@null"
             android:fontFamily="@font/notosanskrregular"
             android:hint="비밀번호를 확인해주세요"
@@ -151,8 +160,9 @@
             android:textColor="@color/black_content"
             android:textColorHint="@color/gray_content"
             android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView21"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            app:layout_constraintTop_toBottomOf="@+id/textView21"/>
 
         <View
             android:id="@+id/view11"
@@ -182,8 +192,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="109dp"
-        android:layout_marginLeft="109dp"
         android:layout_marginEnd="26dp"
         android:layout_marginRight="26dp"
         android:fontFamily="@font/notosanskrmedium"
@@ -194,7 +202,6 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
         app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
 
