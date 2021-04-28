@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_profile_img_chat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:src="@drawable/img_puppy"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout12"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout12"
+        app:layout_constraintWidth_percent="0.1166" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/item_profile_img_chat"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/item_name_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskrbold"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="사용자 이름"
+            android:textColor="@color/black_content"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_part_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/notosanskrregular"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="파트명"
+            android:textColor="@color/gray_content"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="@+id/item_name_chat"
+            app:layout_constraintTop_toBottomOf="@+id/item_name_chat" />
+
+        <TextView
+            android:id="@+id/item_content_chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/notosanskrregular"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="마지막 채팅 내용"
+            android:textColor="@color/black_content"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/item_part_chat"
+            app:layout_constraintTop_toBottomOf="@+id/item_part_chat" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/gray_divider"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
