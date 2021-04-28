@@ -29,6 +29,8 @@
         <activity
             android:name=".upload.ui.PostingActivity"
             android:theme="@style/Theme.RedTheme" />
+        <activity android:name=".mypage.ui.RecommendListActivity"
+            android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".main.ui.MainActivity"
             android:theme="@style/Theme.WhiteTheme">
