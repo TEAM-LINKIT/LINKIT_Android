@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -66,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@id/et_content" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintlayout_input_tool"
+                android:id="@+id/constraintlayout_input_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
@@ -75,7 +76,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/view">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_input_tool"
+                    android:id="@+id/recyclerview_input_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
@@ -89,12 +90,12 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="17dp"
                     android:background="@color/gray_divider"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerview_input_tool" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_input_field" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_example_tool"
+                android:id="@+id/recyclerview_example_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
@@ -103,7 +104,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/constraintlayout_input_tool" />
+                app:layout_constraintTop_toBottomOf="@id/constraintlayout_input_field" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
