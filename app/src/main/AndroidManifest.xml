@@ -36,11 +36,13 @@
             android:name=".mypage.ui.RecommendListActivity"
             android:theme="@style/Theme.WhiteTheme" />
         <activity
+            android:name=".mypage.ui.PostingListActivity"
+            android:theme="@style/Theme.WhiteTheme" />
+        <activity
             android:name=".main.ui.MainActivity"
             android:theme="@style/Theme.WhiteTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
