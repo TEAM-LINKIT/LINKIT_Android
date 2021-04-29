@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
         <activity
+            android:name=".signup.SignUpProfileActivity"
+            android:theme="@style/Theme.WhiteTheme" />
+        <activity
             android:name=".signup.SignUpActivity"
             android:theme="@style/Theme.WhiteTheme" />
         <activity
@@ -29,7 +32,8 @@
         <activity
             android:name=".upload.ui.PostingActivity"
             android:theme="@style/Theme.RedTheme" />
-        <activity android:name=".mypage.ui.RecommendListActivity"
+        <activity
+            android:name=".mypage.ui.RecommendListActivity"
             android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".main.ui.MainActivity"
