@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
         <activity
+            android:name=".signup.SignUpPartActivity"
+            android:theme="@style/Theme.WhiteTheme"/>
+        <activity
             android:name=".signup.SignUpProfileActivity"
-            android:theme="@style/Theme.WhiteTheme" />
+            android:theme="@style/Theme.WhiteTheme"/>
         <activity
             android:name=".signup.SignUpActivity"
             android:theme="@style/Theme.WhiteTheme" />
