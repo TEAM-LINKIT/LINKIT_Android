@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
+        <activity android:name=".profile.ui.RecommendActivity"
+            android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".signup.SignUpPartActivity"
             android:theme="@style/Theme.WhiteTheme"/>
@@ -46,6 +48,7 @@
             android:theme="@style/Theme.WhiteTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
