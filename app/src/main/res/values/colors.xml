@@ -11,8 +11,8 @@
     <color name="red_main">#F56457</color>
     <color name="black_content">#4D4E53</color>
     <color name="gray_divider">#F2F2F2</color>
-    <color name="red_light_btn">#96F6B6B0</color>
     <color name="red_light_label">#96FFD4D0</color>
+    <color name="red_light_btn">#96F6B6B0</color>
     <color name="red_light_profile">#82F9978E</color>
     <color name="red_light_shadow">#9AF9978E</color>
     <color name="gray_light_shadow">#799F9F9F</color>
