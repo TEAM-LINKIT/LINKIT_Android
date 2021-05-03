@@ -68,12 +68,15 @@
             android:textColor="@color/black_content"
             android:textColorHint="@color/gray_content"
             android:textSize="14dp"
+            android:singleLine="true"
+            android:lines="1"
+            android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView19"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
         <View
-            android:id="@+id/view9"
+            android:id="@+id/divider_id"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="9dp"
@@ -95,8 +98,8 @@
             android:text="비밀번호"
             android:textColor="@color/black_content"
             android:textSize="15dp"
-            app:layout_constraintStart_toStartOf="@+id/view9"
-            app:layout_constraintTop_toBottomOf="@+id/view9" />
+            app:layout_constraintStart_toStartOf="@+id/divider_id"
+            app:layout_constraintTop_toBottomOf="@+id/divider_id" />
 
         <EditText
             android:id="@+id/et_pwd"
@@ -114,12 +117,15 @@
             android:textColor="@color/black_content"
             android:textColorHint="@color/gray_content"
             android:textSize="14dp"
+            android:singleLine="true"
+            android:lines="1"
+            android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView20"
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
         <View
-            android:id="@+id/view10"
+            android:id="@+id/divider_pwd"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="9dp"
@@ -141,8 +147,8 @@
             android:text="비밀번호 확인"
             android:textColor="@color/black_content"
             android:textSize="15dp"
-            app:layout_constraintStart_toStartOf="@+id/view10"
-            app:layout_constraintTop_toBottomOf="@+id/view10" />
+            app:layout_constraintStart_toStartOf="@+id/divider_pwd"
+            app:layout_constraintTop_toBottomOf="@+id/divider_pwd" />
 
         <EditText
             android:id="@+id/et_pwd2"
@@ -160,12 +166,15 @@
             android:textColor="@color/black_content"
             android:textColorHint="@color/gray_content"
             android:textSize="14dp"
+            android:singleLine="true"
+            android:lines="1"
+            android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView21"
             app:layout_constraintTop_toBottomOf="@+id/textView21"/>
 
         <View
-            android:id="@+id/view11"
+            android:id="@+id/divider_pwd2"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="9dp"
@@ -190,6 +199,7 @@
         app:layout_constraintWidth_percent="0.113" />
 
     <TextView
+        android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="26dp"
