@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
         <activity
+            android:name=".portfolio.ui.EducationActivity"
+            android:theme="@style/Theme.WhiteTheme" />
+        <activity
             android:name=".portfolio.ui.IntroductionActivity"
             android:theme="@style/Theme.WhiteTheme" />
         <activity
