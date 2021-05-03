@@ -10,7 +10,7 @@ class ProjectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProjectBinding.inflate(layoutInflater)
-        var view = binding.root
+        val view = binding.root
         setContentView(view)
     }
 }
