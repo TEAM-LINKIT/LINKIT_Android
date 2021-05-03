@@ -138,8 +138,11 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun goToSignUpProfileActivity() {
         val intent = Intent(this, SignUpProfileActivity::class.java)
-        intent.putExtra("id", binding.etId.text.toString())
-        intent.putExtra("pwd", binding.etPwd.text.toString())
+        intent.apply {
+            putExtra("id", binding.etId.text.toString())
+            putExtra("pwd", binding.etPwd.text.toString())
+            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+        }
         startActivity(intent)
         finish()
     }
