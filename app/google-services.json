@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "85691700801",
+    "project_id": "linkit-789af",
+    "storage_bucket": "linkit-789af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85691700801:android:652a0acf0cb630645898c0",
+        "android_client_info": {
+          "package_name": "com.example.linkit_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85691700801-i0o1ijl46fcckn0nridamak03j05g8qn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuoAJYlwDd6cUOWKATVtY4qLY0-lzTz34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85691700801-i0o1ijl46fcckn0nridamak03j05g8qn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
