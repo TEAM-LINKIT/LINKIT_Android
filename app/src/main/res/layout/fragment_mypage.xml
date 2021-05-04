@@ -21,7 +21,7 @@
         app:layout_constraintWidth_percent="0.286" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/circleImageView6" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_part"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -47,8 +47,8 @@
         android:text="프론트엔드 개발"
         android:textColor="@color/gray_content"
         android:textSize="12dp"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
 
     <View
         android:id="@+id/view13"
@@ -59,8 +59,8 @@
         android:layout_marginRight="41dp"
         android:background="@color/gray_underline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintStart_toStartOf="@+id/tv_part"
+        app:layout_constraintTop_toBottomOf="@+id/tv_part" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_write_list"
@@ -104,7 +104,6 @@
         android:id="@+id/view14"
         android:layout_width="0dp"
         android:layout_height="1dp"
-
         android:background="@color/gray_underline"
         app:layout_constraintEnd_toEndOf="@+id/btn_write_list"
         app:layout_constraintStart_toStartOf="@+id/btn_write_list"
@@ -152,7 +151,6 @@
         android:id="@+id/view15"
         android:layout_width="0dp"
         android:layout_height="1dp"
-
         android:background="@color/gray_underline"
         app:layout_constraintEnd_toEndOf="@+id/btn_recommend_list"
         app:layout_constraintStart_toStartOf="@+id/btn_recommend_list"
@@ -200,7 +198,6 @@
         android:id="@+id/view16"
         android:layout_width="0dp"
         android:layout_height="1dp"
-
         android:background="@color/gray_underline"
         app:layout_constraintEnd_toEndOf="@+id/btn_logout"
         app:layout_constraintStart_toStartOf="@+id/btn_logout"
@@ -248,14 +245,9 @@
         android:id="@+id/view17"
         android:layout_width="0dp"
         android:layout_height="1dp"
-
         android:background="@color/gray_underline"
         app:layout_constraintEnd_toEndOf="@+id/btn_withdraw"
         app:layout_constraintStart_toStartOf="@+id/btn_withdraw"
         app:layout_constraintTop_toBottomOf="@+id/btn_withdraw" />
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
