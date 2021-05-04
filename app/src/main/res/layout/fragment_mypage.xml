@@ -7,13 +7,247 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mypage.ui.MypageFragment">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/img_cat"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.286" />
+
     <TextView
+        android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="mypage fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/notosanskrbold"
+        android:includeFontPadding="false"
+        android:letterSpacing="-0.03"
+        android:text="강희원"
+        android:textColor="@color/black_content"
+        android:textSize="21dp"
+        app:layout_constraintStart_toStartOf="@+id/circleImageView6"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView6" />
+
+    <TextView
+        android:id="@+id/tv_part"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/notosanskrmedium"
+        android:includeFontPadding="false"
+        android:letterSpacing="-0.03"
+        android:text="프론트엔드 개발"
+        android:textColor="@color/gray_content"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+
+    <View
+        android:id="@+id/view13"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
+        android:background="@color/gray_underline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/tv_part"
+        app:layout_constraintTop_toBottomOf="@+id/tv_part" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_write_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintTop_toBottomOf="@+id/view13">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:fontFamily="@font/notosanskrmedium"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="작성한 글"
+            android:textColor="@color/black_content"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/ic_arrow_gray_next"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.043"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view14"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_underline"
+        app:layout_constraintEnd_toEndOf="@+id/btn_write_list"
+        app:layout_constraintStart_toStartOf="@+id/btn_write_list"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_list" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_recommend_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/view14"
+        app:layout_constraintStart_toStartOf="@+id/view14"
+        app:layout_constraintTop_toBottomOf="@+id/view14">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:fontFamily="@font/notosanskrmedium"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="받은 추천"
+            android:textColor="@color/black_content"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/ic_arrow_gray_next"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.043"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view15"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_underline"
+        app:layout_constraintEnd_toEndOf="@+id/btn_recommend_list"
+        app:layout_constraintStart_toStartOf="@+id/btn_recommend_list"
+        app:layout_constraintTop_toBottomOf="@+id/btn_recommend_list" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/view15"
+        app:layout_constraintStart_toStartOf="@+id/view15"
+        app:layout_constraintTop_toBottomOf="@+id/view15">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:fontFamily="@font/notosanskrmedium"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="로그아웃"
+            android:textColor="@color/black_content"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/ic_arrow_gray_next"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.043"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view16"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_underline"
+        app:layout_constraintEnd_toEndOf="@+id/btn_logout"
+        app:layout_constraintStart_toStartOf="@+id/btn_logout"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_withdraw"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/view16"
+        app:layout_constraintStart_toStartOf="@+id/view16"
+        app:layout_constraintTop_toBottomOf="@+id/view16">
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:fontFamily="@font/notosanskrmedium"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.03"
+            android:text="회원 탈퇴"
+            android:textColor="@color/black_content"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/ic_arrow_gray_next"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.043"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view17"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_underline"
+        app:layout_constraintEnd_toEndOf="@+id/btn_withdraw"
+        app:layout_constraintStart_toStartOf="@+id/btn_withdraw"
+        app:layout_constraintTop_toBottomOf="@+id/btn_withdraw" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
