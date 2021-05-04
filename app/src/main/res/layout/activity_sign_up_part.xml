@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -51,7 +52,7 @@
             app:layout_constraintStart_toStartOf="@+id/textView23"
             app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_plan"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -61,7 +62,13 @@
             app:cardCornerRadius="10dp"
             android:outlineSpotShadowColor="@color/gray_shadow"
             android:outlineAmbientShadowColor="@color/gray_shadow"
+            android:theme="@style/Theme.MaterialComponents.Light"
             app:cardElevation="10dp"
+            android:checkable="true"
+            app:strokeWidth="2dp"
+            app:rippleColor="@android:color/transparent"
+            app:checkedIcon="@null"
+            app:cardForegroundColor="@android:color/transparent"
             app:layout_constraintDimensionRatio="1:0.9855"
             app:layout_constraintEnd_toStartOf="@+id/btn_design"
             app:layout_constraintHorizontal_bias="0.5"
@@ -105,6 +112,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
+                    android:id="@+id/tv_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -120,9 +128,9 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_design"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -131,7 +139,13 @@
             app:cardCornerRadius="10dp"
             android:outlineSpotShadowColor="@color/gray_shadow"
             android:outlineAmbientShadowColor="@color/gray_shadow"
+            android:theme="@style/Theme.MaterialComponents.Light"
             app:cardElevation="10dp"
+            android:checkable="true"
+            app:strokeWidth="2dp"
+            app:rippleColor="@android:color/transparent"
+            app:checkedIcon="@null"
+            app:cardForegroundColor="@android:color/transparent"
             app:layout_constraintDimensionRatio="1:0.9855"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -174,6 +188,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
+                    android:id="@+id/tv_design"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -189,9 +204,9 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_front_dev"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -200,7 +215,13 @@
             app:cardCornerRadius="10dp"
             android:outlineSpotShadowColor="@color/gray_shadow"
             android:outlineAmbientShadowColor="@color/gray_shadow"
+            android:theme="@style/Theme.MaterialComponents.Light"
             app:cardElevation="10dp"
+            android:checkable="true"
+            app:strokeWidth="2dp"
+            app:rippleColor="@android:color/transparent"
+            app:checkedIcon="@null"
+            app:cardForegroundColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:0.9855"
             app:layout_constraintStart_toStartOf="@+id/btn_plan"
@@ -244,6 +265,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
+                    android:id="@+id/tv_front_dev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -259,16 +281,22 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_back_dev"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:cardCornerRadius="10dp"
             android:outlineSpotShadowColor="@color/gray_shadow"
             android:outlineAmbientShadowColor="@color/gray_shadow"
+            android:theme="@style/Theme.MaterialComponents.Light"
             app:cardElevation="10dp"
+            android:checkable="true"
+            app:strokeWidth="2dp"
+            app:rippleColor="@android:color/transparent"
+            app:checkedIcon="@null"
+            app:cardForegroundColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="@+id/btn_front_dev"
             app:layout_constraintDimensionRatio="1:0.9855"
             app:layout_constraintStart_toStartOf="@+id/btn_design"
@@ -309,6 +337,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
+                    android:id="@+id/tv_back_dev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -323,8 +352,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout17" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
 
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
