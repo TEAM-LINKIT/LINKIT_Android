@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -30,6 +31,7 @@ class SignUpProfileActivity : AppCompatActivity() {
 
     private lateinit var id: String
     private lateinit var pwd: String
+    private lateinit var profileUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,12 +122,17 @@ class SignUpProfileActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == FLAG_REQ_STORAGE) {
                 val uri = data?.data
-                binding.imgExample.visibility = View.INVISIBLE
-                binding.imgProfileSelect.apply {
-                    visibility = View.VISIBLE
-                    setImageURI(uri)
-                }
+                profileUri = uri!!
+                setProfileImageView(uri)
             }
+        }
+    }
+
+    private fun setProfileImageView(uri: Uri?) {
+        binding.imgExample.visibility = View.INVISIBLE
+        binding.imgProfileSelect.apply {
+            visibility = View.VISIBLE
+            setImageURI(uri)
         }
     }
 
@@ -152,7 +159,7 @@ class SignUpProfileActivity : AppCompatActivity() {
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             openGallery()
         } else {
-            Toast.makeText(this, "저장소 권한을 승인해야 앱을 사용할 수 있습니다",
+            Toast.makeText(this, "저장소 권한을 승인해야 프로필 이미지를 설정할 수 있습니다",
                 Toast.LENGTH_SHORT).show()
             return
         }
@@ -175,7 +182,7 @@ class SignUpProfileActivity : AppCompatActivity() {
             putExtra("id", id)
             putExtra("pwd", pwd)
             putExtra("name", binding.etName.text.toString())
-            // Todo: 이미지 보내기
+            putExtra("profileImg", profileUri)
             addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
         startActivity(intent)
