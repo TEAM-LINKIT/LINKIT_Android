@@ -67,6 +67,12 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
     implementation 'com.google.firebase:firebase-database:19.7.0'
 
+    // firebase core
+    implementation 'com.google.firebase:firebase-core:18.0.3'
+
+    // firebase storage
+    implementation 'com.google.firebase:firebase-storage:19.2.2'
+
     // firebase messaging
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
