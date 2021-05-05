@@ -1,11 +1,15 @@
 package com.example.linkit_android.signup
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.linkit_android.R
 import com.example.linkit_android.databinding.ActivitySignUpPartBinding
+import com.example.linkit_android.login.LoginActivity
 import com.google.android.material.card.MaterialCardView
 
 class SignUpPartActivity : AppCompatActivity() {
@@ -28,6 +32,8 @@ class SignUpPartActivity : AppCompatActivity() {
         getIntentValue()
 
         initPartCheckBox()
+
+        initFinishBtn()
     }
 
     private fun getIntentValue() {
@@ -125,5 +131,28 @@ class SignUpPartActivity : AppCompatActivity() {
         }
     }
 
-    // Todo: selectPart가 -1이면 파트를 선택해달라는 토스트 문구 등장, -1이 아니면 회원가입 완료 -> 로그인 뷰로 이동
+    private fun initFinishBtn() {
+        binding.btnFinish.setOnClickListener {
+            if (selectPart != -1) {
+                goToLoginActivity()
+                // Todo: 사용자 정보 sharedPref에 저장, firebase로 전송
+            } else {
+                Toast.makeText(this, "관심 파트를 선택해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun goToLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.apply {
+            putExtra("id", id)
+            putExtra("pwd", pwd)
+            putExtra("name", name)
+            putExtra("profileImg", profileUri)
+            putExtra("part", selectPart)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
 }
