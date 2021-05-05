@@ -35,29 +35,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_back" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_portfolio"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="34dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_back">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_portfolio"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="7dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
-            tools:listitem="@layout/item_notification"
-            android:layout_marginBottom="34dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/btn_back"
+        tools:listitem="@layout/item_notification" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

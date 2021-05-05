@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <View
-        android:id="@+id/view18"
+        android:id="@+id/view_alert_portfolio"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="18dp"
@@ -27,7 +27,7 @@
         android:src="@drawable/img_puppy"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout12"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toEndOf="@+id/view18"
+        app:layout_constraintStart_toEndOf="@+id/view_alert_portfolio"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout12"
         app:layout_constraintWidth_percent="0.1166" />
 
@@ -80,6 +80,7 @@
             android:fontFamily="@font/notosanskrregular"
             android:includeFontPadding="false"
             android:letterSpacing="-0.03"
+            android:lineSpacingExtra="-2dp"
             android:maxLines="2"
             android:text="김영민님이 개발자 모집해요 글에 포트폴리오를 전송했습니다."
             android:textColor="@color/black_content"
