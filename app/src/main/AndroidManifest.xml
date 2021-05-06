@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
         <activity
+            android:name=".notification.ui.NotificationActivity"
+            android:theme="@style/Theme.WhiteTheme"/>
+        <activity
             android:name=".portfolio.ui.ProjectActivity"
             android:theme="@style/Theme.WhiteTheme" />
         <activity
