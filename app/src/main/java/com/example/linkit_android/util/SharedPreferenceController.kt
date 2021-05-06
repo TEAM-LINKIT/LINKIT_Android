@@ -2,9 +2,10 @@ package com.example.linkit_android.util
 
 import android.content.Context
 
-class SharedPreferenceController {
+object SharedPreferenceController {
 
     private val UID = "UID"
+    private val ID = "ID"
     private val USER_NAME = "USER_NAME"
     private val USER_PART = "USER_PART"
     private val PROFILE_IMG = "PROFILE_IMG"
@@ -25,6 +26,24 @@ class SharedPreferenceController {
 
     fun clearUid(context: Context) {
         val pref = context.getSharedPreferences(UID, Context.MODE_PRIVATE)
+        pref.edit().clear().apply()
+    }
+
+    // id
+    fun setId(context: Context, id: String) {
+        val pref = context.getSharedPreferences(ID, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("ID", id)
+        editor.apply()
+    }
+
+    fun getId(context: Context) : String? {
+        val pref = context.getSharedPreferences(ID, Context.MODE_PRIVATE)
+        return pref.getString("ID", "")
+    }
+
+    fun clearId(context: Context) {
+        val pref = context.getSharedPreferences(ID, Context.MODE_PRIVATE)
         pref.edit().clear().apply()
     }
 
@@ -103,6 +122,7 @@ class SharedPreferenceController {
     // 전체 삭제
     fun clearAll(context: Context) {
         clearUid(context)
+        clearId(context)
         clearUserName(context)
         clearUserPart(context)
         clearProfileImg(context)

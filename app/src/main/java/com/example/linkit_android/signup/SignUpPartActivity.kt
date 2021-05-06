@@ -2,7 +2,6 @@ package com.example.linkit_android.signup
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -10,7 +9,13 @@ import androidx.core.content.ContextCompat
 import com.example.linkit_android.R
 import com.example.linkit_android.databinding.ActivitySignUpPartBinding
 import com.example.linkit_android.login.LoginActivity
+import com.example.linkit_android.model.UserModel
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import java.util.*
 
 class SignUpPartActivity : AppCompatActivity() {
 
@@ -19,9 +24,13 @@ class SignUpPartActivity : AppCompatActivity() {
     private lateinit var id: String
     private lateinit var pwd: String
     private lateinit var name: String
-    private lateinit var profileUri: Uri
+    private lateinit var profileImg: String
 
     private var selectPart = -1
+    private lateinit var pushToken: String
+
+    private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference: DatabaseReference = firebaseDatabase.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +49,7 @@ class SignUpPartActivity : AppCompatActivity() {
         id = intent.getStringExtra("id").toString()
         pwd = intent.getStringExtra("pwd").toString()
         name = intent.getStringExtra("name").toString()
-        profileUri = intent.getParcelableExtra("profileImg")!!
+        profileImg = intent.getStringExtra("profileImg").toString()
     }
 
     /* 파트 선택 체크박스 관련 함수 */
@@ -134,11 +143,30 @@ class SignUpPartActivity : AppCompatActivity() {
     private fun initFinishBtn() {
         binding.btnFinish.setOnClickListener {
             if (selectPart != -1) {
+                getPushToken()
+                pushUserAuthenticationToServer()
                 goToLoginActivity()
-                // Todo: 사용자 정보 sharedPref에 저장, firebase로 전송
             } else {
                 Toast.makeText(this, "관심 파트를 선택해주세요", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun getPushToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (!it.isSuccessful)
+                return@addOnCompleteListener
+            pushToken = it.result.toString()
+        }
+    }
+
+    private fun pushUserAuthenticationToServer() {
+        FirebaseAuth.getInstance()
+            .createUserWithEmailAndPassword(id, pwd)
+            .addOnCompleteListener {
+            val uid = it.result?.user?.uid!!
+            val userModel = UserModel(uid, id, name, selectPart, profileImg, pushToken)
+            databaseReference.child("users").child(uid).setValue(userModel)
         }
     }
 
@@ -147,10 +175,6 @@ class SignUpPartActivity : AppCompatActivity() {
         intent.apply {
             putExtra("id", id)
             putExtra("pwd", pwd)
-            putExtra("name", name)
-            putExtra("profileImg", profileUri)
-            putExtra("part", selectPart)
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
         setResult(Activity.RESULT_OK, intent)
         finish()
