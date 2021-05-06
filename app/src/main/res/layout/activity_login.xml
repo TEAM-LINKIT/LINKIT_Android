@@ -51,7 +51,7 @@
             android:layout_marginBottom="13dp"
             android:background="@null"
             android:fontFamily="@font/notosanskrregular"
-            android:hint="아이디"
+            android:hint="이메일"
             android:includeFontPadding="false"
             android:inputType="text"
             android:letterSpacing="-0.03"

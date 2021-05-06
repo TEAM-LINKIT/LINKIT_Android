@@ -20,6 +20,9 @@ import com.example.linkit_android.R
 import com.example.linkit_android.databinding.ActivitySignUpProfileBinding
 import com.example.linkit_android.util.hideKeyboard
 import com.example.linkit_android.util.showKeyboard
+import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SignUpProfileActivity : AppCompatActivity() {
 
@@ -32,6 +35,9 @@ class SignUpProfileActivity : AppCompatActivity() {
     private lateinit var id: String
     private lateinit var pwd: String
     private lateinit var profileUri: Uri
+    private lateinit var profileImg: String
+
+    private val firebaseStorage = FirebaseStorage.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +130,7 @@ class SignUpProfileActivity : AppCompatActivity() {
                 val uri = data?.data
                 profileUri = uri!!
                 setProfileImageView(uri)
+                uploadImgToStorage()
             }
         }
     }
@@ -133,6 +140,18 @@ class SignUpProfileActivity : AppCompatActivity() {
         binding.imgProfileSelect.apply {
             visibility = View.VISIBLE
             setImageURI(uri)
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun uploadImgToStorage() {
+        val simpleDateForm = SimpleDateFormat("yyyyMMddhhmmss")
+        val fileName = simpleDateForm.format(Date()) + ".png"
+        val imgRef = firebaseStorage.getReference("profileImages/$fileName")
+        imgRef.putFile(profileUri).addOnSuccessListener {
+            imgRef.downloadUrl.addOnSuccessListener {
+                profileImg = it.toString()
+            }
         }
     }
 
@@ -182,7 +201,7 @@ class SignUpProfileActivity : AppCompatActivity() {
             putExtra("id", id)
             putExtra("pwd", pwd)
             putExtra("name", binding.etName.text.toString())
-            putExtra("profileImg", profileUri)
+            putExtra("profileImg", profileImg)
             addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
         startActivity(intent)
