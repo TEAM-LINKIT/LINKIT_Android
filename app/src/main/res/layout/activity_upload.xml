@@ -158,6 +158,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
                 <TextView
+                    android:id="@+id/tv_start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
@@ -223,6 +224,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
                 <TextView
+                    android:id="@+id/tv_end_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"

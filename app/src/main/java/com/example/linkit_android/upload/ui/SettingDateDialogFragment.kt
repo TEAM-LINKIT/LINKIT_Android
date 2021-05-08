@@ -9,10 +9,16 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.example.linkit_android.databinding.DialogSettingDateBinding
+import com.example.linkit_android.upload.ui.UploadActivity.Companion.upload_end_flag
+import com.example.linkit_android.upload.ui.UploadActivity.Companion.upload_end_month
+import com.example.linkit_android.upload.ui.UploadActivity.Companion.upload_end_year
+import com.example.linkit_android.upload.ui.UploadActivity.Companion.upload_start_flag
+import com.example.linkit_android.upload.ui.UploadActivity.Companion.upload_start_month
+import com.example.linkit_android.upload.ui.UploadActivity.Companion.upload_start_year
 import com.example.linkit_android.util.setDialogSize
 import java.util.*
 
-class SettingDateDialogFragment : DialogFragment() {
+class SettingDateDialogFragment(val itemClick: (IntArray) -> Unit) : DialogFragment() {
 
     private var _binding: DialogSettingDateBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +45,13 @@ class SettingDateDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initDatePicker()
+
+        initOkBtn()
+
+        initCancelBtn()
     }
+
+    /* date picker */
 
     private fun initDatePicker() {
         year = binding.includeYmPicker.year
@@ -56,11 +68,6 @@ class SettingDateDialogFragment : DialogFragment() {
         setListenerOnDatePicker()
     }
 
-    private fun setDateValue() {
-        selectYear = year.value
-        selectMonth = month.value
-    }
-
     private fun setDateRange() {
         // 현재 날짜 가져오기
         currentDate = Calendar.getInstance()
@@ -75,8 +82,20 @@ class SettingDateDialogFragment : DialogFragment() {
     }
 
     private fun initDateValue() {
-        year.value = currentDate.get(Calendar.YEAR)
-        month.value = currentDate.get(Calendar.MONTH) + 1
+        if (upload_start_flag) {
+            year.value = upload_start_year
+            month.value = upload_start_month
+            upload_start_flag = false
+        } else if (upload_end_flag) {
+            year.value = upload_end_year
+            month.value = upload_end_month
+            upload_end_flag = false
+        }
+    }
+
+    private fun setDateValue() {
+        selectYear = year.value
+        selectMonth = month.value
     }
 
     private fun setPickerLimit() {
@@ -98,6 +117,24 @@ class SettingDateDialogFragment : DialogFragment() {
         // month picker change listener
         month.setOnValueChangedListener { _, _, _ ->
             setDateValue()
+        }
+    }
+
+    /* 확인 버튼 클릭 */
+
+    private fun initOkBtn() {
+        binding.buttonOk.setOnClickListener {
+            val pickDate = intArrayOf(selectYear, selectMonth)
+            itemClick(pickDate)
+            this.dismiss()
+        }
+    }
+
+    /* 취소 버튼 클릭 */
+
+    private fun initCancelBtn() {
+        binding.buttonCancel.setOnClickListener {
+            this.dismiss()
         }
     }
 
