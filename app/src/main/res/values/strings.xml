@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LINKIT_Android</string>
     <string name="select_date_string">%d년 %d월</string>
+    <string name="part_count_string">%d명</string>
 </resources>

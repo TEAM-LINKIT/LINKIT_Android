@@ -24,6 +24,8 @@ class UploadActivity : AppCompatActivity() {
 
         initEndDateBtn()
 
+        initPartCountText()
+
         initAddPartBtn()
     }
 
@@ -32,6 +34,8 @@ class UploadActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
     }
+
+    /* 프로젝트 기간 설정 */
 
     private fun setCurrentDate() {
         upload_start_year = currentDate.get(Calendar.YEAR)
@@ -79,14 +83,40 @@ class UploadActivity : AppCompatActivity() {
         this.text = getString(R.string.select_date_string, startDate, endDate)
     }
 
+    /* 모집 파트 및 인원 설정 */
+
+    private fun initPartCountText() {
+        upload_plan_count = 0
+        upload_design_count = 0
+        upload_frontend_count = 0
+        upload_backend_count = 0
+        setPartCountText()
+    }
+
     private fun initAddPartBtn() {
         binding.btnAdd.setOnClickListener {
-            val selectPartDialog = SelectPartDialogFragment()
+            val selectPartDialog = SelectPartDialogFragment {
+                upload_plan_count = it[0]
+                upload_design_count = it[1]
+                upload_frontend_count = it[2]
+                upload_backend_count = it[3]
+                setPartCountText()
+            }
             selectPartDialog.show(supportFragmentManager, "select_part_dialog")
         }
     }
 
+    private fun setPartCountText() {
+        binding.apply {
+            tvCountPlan.text = getString(R.string.part_count_string, upload_plan_count)
+            tvCountDesign.text = getString(R.string.part_count_string, upload_design_count)
+            tvCountFrontend.text = getString(R.string.part_count_string, upload_frontend_count)
+            tvCountBackend.text = getString(R.string.part_count_string, upload_backend_count)
+        }
+    }
+
     // Todo: 업로드 버튼 클릭 시 firebase로 전송 -> 시작일과 종료일은 "yyyy년 mm월" string 형식으로 저장하기
+    // Todo: 파트 별 모집 인원 firebase로 보낼 때는 upload_... 값 보내기
 
     companion object {
         var upload_start_year = 0
@@ -95,5 +125,9 @@ class UploadActivity : AppCompatActivity() {
         var upload_end_month = 0
         var upload_start_flag = false
         var upload_end_flag = false
+        var upload_plan_count = 0
+        var upload_design_count = 0
+        var upload_frontend_count = 0
+        var upload_backend_count = 0
     }
 }
