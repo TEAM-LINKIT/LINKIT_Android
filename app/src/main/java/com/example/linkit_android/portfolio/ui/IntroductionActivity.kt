@@ -51,8 +51,9 @@ class IntroductionActivity : AppCompatActivity() {
     private fun pushIntroductionToServer() {
         val uid = SharedPreferenceController.getUid(this).toString()
         val introContent = binding.etContentIntroduce.text.toString()
-        val portfolioModel = PortfolioModel(introContent,null,null,null,null)
-        databaseReference.child("users").child(uid).child("portfolio").setValue(portfolioModel)
+        // val portfolioModel = PortfolioModel(introContent,null,null,null,null)
+        databaseReference.child("users").child(uid).child("portfolio").child("introduction")
+                .setValue(introContent)
     }
 
     private fun goToPortfolioFragment() {
