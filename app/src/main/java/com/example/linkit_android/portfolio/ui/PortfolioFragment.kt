@@ -1,5 +1,7 @@
 package com.example.linkit_android.portfolio.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,15 +12,21 @@ import com.example.linkit_android.databinding.FragmentPortfolioBinding
 import com.example.linkit_android.portfolio.adapter.ProjectAdapter
 import com.example.linkit_android.portfolio.adapter.ProjectData
 import com.example.linkit_android.portfolio.adapter.TagAdapter
+import com.example.linkit_android.util.SharedPreferenceController
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.firebase.database.*
+import com.google.firebase.database.snapshot.EmptyNode
 
 class PortfolioFragment : Fragment() {
 
     private var _binding: FragmentPortfolioBinding? = null
     private val binding get() = _binding!!
+
+    private val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference : DatabaseReference = firebaseDatabase.reference
 
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var toolAdapter: TagAdapter
@@ -35,6 +43,8 @@ class PortfolioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initPortfolioContent()
+
         initProjectRecyclerView()
 
         initToolRecyclerView()
@@ -44,7 +54,36 @@ class PortfolioFragment : Fragment() {
         initToolEditBtn()
 
         initFieldEditBtn()
+
+        initIntroductionBtn()
     }
+
+    /* 기존 DB에 저장되어 있던 값이 있다면 로드 */
+    private fun initPortfolioContent() {
+        val uid = SharedPreferenceController.getUid(context!!).toString()
+        databaseReference.child("users").child(uid).child("portfolio")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.child("introduction").exists()) {
+                            binding.tvNoneIntroduce.visibility = View.VISIBLE
+                            binding.tvContentIntroduce.visibility = View.GONE
+                        }
+                        else {
+                            binding.tvContentIntroduce.text = snapshot.child("introduction").value.toString()
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+    }
+
+
+    private fun initIntroductionBtn() {
+        binding.btnEditIntroduce.setOnClickListener {
+            val intent = Intent(context!!, IntroductionActivity::class.java)
+            startActivityForResult(intent, 1)
+        }
+    }
+
 
     private fun initProjectRecyclerView() {
         projectAdapter = ProjectAdapter(context!!)
@@ -108,6 +147,27 @@ class PortfolioFragment : Fragment() {
         binding.btnEditField.setOnClickListener {
             val fieldDialog = FieldDialogFragment()
             fieldDialog.show(childFragmentManager, "field_dialog")
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                1 -> {
+                    // getStringExtra()는 인텐트 값 가지고 오는 것
+                    binding.tvContentIntroduce.text = data!!.getStringExtra("introductionContent")
+                    // 기존 내용 다 지우고 저장 누른 경우
+                    if(binding.tvContentIntroduce.text == "") {
+                        binding.tvNoneIntroduce.visibility = View.VISIBLE
+                        binding.tvContentIntroduce.visibility = View.GONE
+                    }
+                    else {
+                        binding.tvNoneIntroduce.visibility = View.GONE
+                        binding.tvContentIntroduce.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 
