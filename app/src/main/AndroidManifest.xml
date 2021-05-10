@@ -42,7 +42,13 @@
             android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".login.LoginActivity"
-            android:theme="@style/Theme.RedTheme" />
+            android:theme="@style/Theme.RedTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".chatting.ui.ChatRoomActivity"
             android:theme="@style/Theme.WhiteTheme" />
@@ -63,13 +69,7 @@
             android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".main.ui.MainActivity"
-            android:theme="@style/Theme.WhiteTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.WhiteTheme"/>
     </application>
 
 </manifest>
