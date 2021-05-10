@@ -155,9 +155,9 @@ class PortfolioFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 1 -> {
-                    // getStringExtra()는 인텐트 값 가지고 오는 것
+                    /* getStringExtra()는 인텐트 값 가지고 오는 */
                     binding.tvContentIntroduce.text = data!!.getStringExtra("introductionContent")
-                    // 기존 내용 다 지우고 저장 누른 경우
+                    /* 기존 내용 다 지우고 저장 누른 경우 */
                     if(binding.tvContentIntroduce.text == "") {
                         binding.tvNoneIntroduce.visibility = View.VISIBLE
                         binding.tvContentIntroduce.visibility = View.GONE
