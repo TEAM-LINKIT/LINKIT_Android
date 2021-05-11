@@ -2,11 +2,12 @@ package com.example.linkit_android.portfolio.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkit_android.databinding.FragmentPortfolioBinding
 import com.example.linkit_android.portfolio.adapter.ProjectAdapter
@@ -18,7 +19,7 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.firebase.database.*
-import com.google.firebase.database.snapshot.EmptyNode
+
 
 class PortfolioFragment : Fragment() {
 
@@ -56,20 +57,39 @@ class PortfolioFragment : Fragment() {
         initFieldEditBtn()
 
         initIntroductionBtn()
+
+        initEducationBtn()
     }
 
     /* 기존 DB에 저장되어 있던 값이 있다면 로드 */
     private fun initPortfolioContent() {
         val uid = SharedPreferenceController.getUid(context!!).toString()
-        databaseReference.child("users").child(uid).child("portfolio")
+        databaseReference.child("users").child(uid).child("portfolio").child("introduction")
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (!snapshot.child("introduction").exists()) {
+                        if (!snapshot.exists()) {
                             binding.tvNoneIntroduce.visibility = View.VISIBLE
                             binding.tvContentIntroduce.visibility = View.GONE
                         }
                         else {
-                            binding.tvContentIntroduce.text = snapshot.child("introduction").value.toString()
+                            binding.tvContentIntroduce.text = snapshot.value.toString()
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+
+        databaseReference.child("users").child(uid).child("portfolio").child("education")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.exists()) {
+                            binding.tvNoneEducation.visibility = View.VISIBLE
+                            binding.tvSchool.visibility = View.GONE
+                            binding.tvMajor.visibility = View.GONE
+                        }
+                        else {
+
+                            binding.tvSchool.text = snapshot.child("0").value.toString()
+                            binding.tvMajor.text = snapshot.child("1").value.toString()
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {}
@@ -81,6 +101,13 @@ class PortfolioFragment : Fragment() {
         binding.btnEditIntroduce.setOnClickListener {
             val intent = Intent(context!!, IntroductionActivity::class.java)
             startActivityForResult(intent, 1)
+        }
+    }
+
+    private fun initEducationBtn() {
+        binding.btnEditEdu.setOnClickListener {
+            val intent = Intent(context!!, EducationActivity::class.java)
+            startActivityForResult(intent, 2)
         }
     }
 
@@ -165,6 +192,23 @@ class PortfolioFragment : Fragment() {
                     else {
                         binding.tvNoneIntroduce.visibility = View.GONE
                         binding.tvContentIntroduce.visibility = View.VISIBLE
+                    }
+                }
+                2 -> {
+                    val educationContentList = data!!.getStringArrayListExtra("educationContentList")
+                    binding.tvSchool.text = educationContentList!![0].toString()
+                    binding.tvMajor.text = educationContentList!![1].toString()
+
+                    if (binding.tvSchool.text == "" && binding.tvMajor.text == "") {
+                        binding.tvNoneEducation.visibility = View.VISIBLE
+                        binding.tvMajor.visibility = View.GONE
+                        binding.tvSchool.visibility = View.GONE
+                    }
+
+                    else {
+                        binding.tvNoneEducation.visibility = View.GONE
+                        binding.tvMajor.visibility = View.VISIBLE
+                        binding.tvSchool.visibility = View.VISIBLE
                     }
                 }
             }
