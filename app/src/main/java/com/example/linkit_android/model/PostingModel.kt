@@ -1,10 +1,10 @@
 package com.example.linkit_android.model
 
-class PostingModel (
-        val title: String,
-        val content: String,
-        val writer: String,
-        val startDate: String,
-        val endDate: String,
-        val recruitNum: MutableList<Int>
-        )
+class PostingModel {
+        var title: String? = null
+        var content: String? = null
+        var writer: String? = null
+        var startDate: String? = null
+        var endDate: String? = null
+        var recruitNum: MutableList<Int>? = null
+}
