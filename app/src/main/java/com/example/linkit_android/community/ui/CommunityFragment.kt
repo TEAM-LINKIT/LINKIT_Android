@@ -9,11 +9,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.linkit_android.R
 import com.example.linkit_android.community.adapter.CommunityAdapter
 import com.example.linkit_android.community.adapter.CommunityData
 import com.example.linkit_android.databinding.FragmentCommunityBinding
+import com.example.linkit_android.model.PostingModel
 import com.example.linkit_android.upload.ui.UploadActivity
+import com.example.linkit_android.util.SharedPreferenceController
+import com.google.firebase.database.*
+import java.lang.StringBuilder
 
 class CommunityFragment : Fragment() {
 
@@ -21,8 +26,15 @@ class CommunityFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var communityAdapter: CommunityAdapter
+    private var postingList: MutableList<PostingModel> = mutableListOf()
 
     private var selectPart = -1
+
+    private lateinit var userName: String
+    private lateinit var profileImg: String
+
+    private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference: DatabaseReference = firebaseDatabase.reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +47,37 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initPartSpinner()
+        setPref()
+
+        initProfile()
 
         initRecyclerView()
 
+        initPartSpinner()
+
         goToUploadActivity()
+    }
+
+    private fun setPref() {
+        SharedPreferenceController.apply {
+            userName = getUserName(context!!).toString()
+            profileImg = getProfileImg(context!!).toString()
+        }
+    }
+
+    private fun initProfile() {
+        binding.apply {
+            tvUserName.text = userName
+            Glide.with(context!!).load(profileImg).into(imgProfile)
+        }
+    }
+
+    private fun initRecyclerView() {
+        communityAdapter = CommunityAdapter(context!!)
+        binding.recyclerviewCommunity.apply {
+            adapter = communityAdapter
+            layoutManager = LinearLayoutManager(context!!)
+        }
     }
 
     private fun initPartSpinner() {
@@ -51,12 +89,11 @@ class CommunityFragment : Fragment() {
             adapter = partAdapter
             onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    selectPart = when (position) {
-                        0 -> 0 // 기획
-                        1 -> 1 // 디자인
-                        2 -> 2 // 프론트
-                        3 -> 3 // 백엔드
-                        else -> -1
+                    when (position) {
+                        0 -> getPostingData(position)
+                        1 -> getPostingData(position)
+                        2 -> getPostingData(position)
+                        3 -> getPostingData(position)
                     }
                 }
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -64,23 +101,41 @@ class CommunityFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView() {
-        communityAdapter = CommunityAdapter(context!!)
+    private fun getPostingData(position: Int) {
+        selectPart = position
+        databaseReference.child("community").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                postingList.clear()
+                for (data in snapshot.children) {
+                    val postingData = data.getValue(PostingModel::class.java)
+                    if (postingData?.recruitNum!![position] != 0)
+                        postingList.add(postingData)
+                }
+                bindData()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
 
-        binding.recyclerviewCommunity.apply {
-            adapter = communityAdapter
-            layoutManager = LinearLayoutManager(context!!)
+    private fun bindData() {
+        communityAdapter.data = mutableListOf()
+        for (data in postingList) {
+            communityAdapter.data.add(CommunityData(data.title!!, setPartListData(data.recruitNum!!)))
         }
-
-        communityAdapter.data = mutableListOf(
-            CommunityData("함께 웹 개발 하실 분 구해요!", "기획 · 디자인 · 프론트엔드 · 백엔드"),
-            CommunityData("함께 토이프로젝트 진행할 고등학생 있나요?", "프론트엔드"),
-            CommunityData("한이음 공모전 같이 나갈 사람 있나요?", "프론트엔드 · 백엔드"),
-            CommunityData("안녕하세요! 웹 개발 공모전 함께 나갈 고등학생 구합니다. 저도 고등학생입니다!", "기획 · 디자인 · 프론트엔드 · 백엔드"),
-            CommunityData("한이음 공모전 같이 나갈 사람 있나요?", "프론트엔드 · 백엔드"),
-            CommunityData("함께 웹 개발 하실 분 구해요!", "기획 · 디자인 · 프론트엔드 · 백엔드")
-        )
         communityAdapter.notifyDataSetChanged()
+    }
+
+    private fun setPartListData(partList: MutableList<Int>) : String {
+        val partString = StringBuilder()
+        if (partList[0] != 0)
+            partString.append("기획")
+        if (partList[1] != 0)
+            partString.append("디자인")
+        if (partList[2] != 0)
+            partString.append("프론드엔드")
+        if (partList[3] != 0)
+            partString.append("백엔드")
+        return partString.toString()
     }
 
     private fun goToUploadActivity() {

@@ -149,13 +149,16 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun pushPostingToServer() {
-        val title = binding.etTitle.text.toString()
-        val content = binding.etContent.text.toString()
-        val startDate = getString(R.string.select_date_string, upload_start_year, upload_start_month)
-        val endDate = getString(R.string.select_date_string, upload_end_year, upload_end_month)
-        val recruitNum = mutableListOf(upload_plan_count, upload_design_count, upload_frontend_count, upload_backend_count)
         val timeStamp = Timestamp(System.currentTimeMillis()).time.toString()
-        val postingModel = PostingModel(title, content, uid, startDate, endDate, recruitNum)
+        val postingModel = PostingModel()
+        postingModel.apply {
+            this.title = binding.etTitle.text.toString()
+            this.content = binding.etContent.text.toString()
+            this.writer = uid
+            this.startDate = getString(R.string.select_date_string, upload_start_year, upload_start_month)
+            this.endDate = getString(R.string.select_date_string, upload_end_year, upload_end_month)
+            this.recruitNum = mutableListOf(upload_plan_count, upload_design_count, upload_frontend_count, upload_backend_count)
+        }
         databaseReference.child("community").child(timeStamp).setValue(postingModel).addOnSuccessListener {
             pushPostingToUserNode(timeStamp)
         }
