@@ -21,7 +21,9 @@ import com.example.linkit_android.community.adapter.CommunityAdapter
 import com.example.linkit_android.community.adapter.CommunityData
 import com.example.linkit_android.databinding.FragmentCommunityBinding
 import com.example.linkit_android.model.PostingModel
+import com.example.linkit_android.upload.ui.PostingActivity
 import com.example.linkit_android.upload.ui.UploadActivity
+import com.example.linkit_android.util.ItemClickListener
 import com.example.linkit_android.util.SharedPreferenceController
 import com.google.firebase.database.*
 
@@ -135,6 +137,8 @@ class CommunityFragment : Fragment() {
             communityAdapter.data.add(CommunityData(data.title!!, setPartListData(data.recruitNum!!)))
         }
         communityAdapter.notifyDataSetChanged()
+
+        initItemClickListener()
     }
 
     private fun setPartListData(partList: MutableList<Int>) : CharSequence {
@@ -163,6 +167,17 @@ class CommunityFragment : Fragment() {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         return spannableString
+    }
+
+    private fun initItemClickListener() {
+        communityAdapter.setItemClickListener(object: ItemClickListener {
+            override fun onClickItem(view: View, position: Int) {
+                val id = postingList[position].id
+                val intent = Intent(context!!, PostingActivity::class.java)
+                intent.putExtra("postingId", id)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun goToUploadActivity() {

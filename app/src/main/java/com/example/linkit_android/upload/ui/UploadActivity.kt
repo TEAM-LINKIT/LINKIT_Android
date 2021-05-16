@@ -152,6 +152,7 @@ class UploadActivity : AppCompatActivity() {
         val timeStamp = Timestamp(System.currentTimeMillis()).time.toString()
         val postingModel = PostingModel()
         postingModel.apply {
+            this.id = timeStamp
             this.title = binding.etTitle.text.toString()
             this.content = binding.etContent.text.toString()
             this.writer = uid
