@@ -3,20 +3,33 @@ package com.example.linkit_android.upload.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import com.example.linkit_android.R
 import com.example.linkit_android.databinding.ActivityUploadBinding
+import com.example.linkit_android.model.PostingModel
+import com.example.linkit_android.util.SharedPreferenceController
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.sql.Timestamp
 import java.util.*
 
 class UploadActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUploadBinding
 
+    private lateinit var uid: String
+
     private val currentDate = Calendar.getInstance()
+
+    private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference: DatabaseReference = firebaseDatabase.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setViewBinding()
+
+        setPref()
 
         setCurrentDate()
 
@@ -27,12 +40,18 @@ class UploadActivity : AppCompatActivity() {
         initPartCountText()
 
         initAddPartBtn()
+
+        initUploadBtn()
     }
 
     private fun setViewBinding() {
         binding = ActivityUploadBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+    }
+
+    private fun setPref() {
+        uid = SharedPreferenceController.getUid(this).toString()
     }
 
     /* 프로젝트 기간 설정 */
@@ -79,8 +98,8 @@ class UploadActivity : AppCompatActivity() {
         settingDateDialog.show(supportFragmentManager, "setting_end_date_dialog")
     }
 
-    private fun TextView.setDateText(startDate: Int, endDate: Int) {
-        this.text = getString(R.string.select_date_string, startDate, endDate)
+    private fun TextView.setDateText(year: Int, month: Int) {
+        this.text = getString(R.string.select_date_string, year, month)
     }
 
     /* 모집 파트 및 인원 설정 */
@@ -115,8 +134,44 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    // Todo: 업로드 버튼 클릭 시 firebase로 전송 -> 시작일과 종료일은 "yyyy년 mm월" string 형식으로 저장하기
-    // Todo: 파트 별 모집 인원 firebase로 보낼 때는 upload_... 값 보내기
+    private fun initUploadBtn() {
+        binding.btnUpload.setOnClickListener {
+            if (binding.etTitle.text.isEmpty())
+                Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show()
+            else if (binding.etContent.text.isEmpty())
+                Toast.makeText(this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
+            else if (upload_plan_count == 0 && upload_design_count == 0 &&
+                    upload_frontend_count == 0 && upload_backend_count == 0)
+                Toast.makeText(this, "모집 인원을 설정해주세요", Toast.LENGTH_SHORT).show()
+            else
+                pushPostingToServer()
+        }
+    }
+
+    private fun pushPostingToServer() {
+        val timeStamp = Timestamp(System.currentTimeMillis()).time.toString()
+        val postingModel = PostingModel()
+        postingModel.apply {
+            this.id = timeStamp
+            this.title = binding.etTitle.text.toString()
+            this.content = binding.etContent.text.toString()
+            this.writer = uid
+            this.startDate = getString(R.string.select_date_string, upload_start_year, upload_start_month)
+            this.endDate = getString(R.string.select_date_string, upload_end_year, upload_end_month)
+            this.recruitNum = mutableListOf(upload_plan_count, upload_design_count, upload_frontend_count, upload_backend_count)
+        }
+        databaseReference.child("community").child(timeStamp).setValue(postingModel).addOnSuccessListener {
+            pushPostingToUserNode(timeStamp)
+        }
+    }
+
+    private fun pushPostingToUserNode(key: String) {
+        databaseReference.child("users").child(uid).child("posting").push().setValue(key)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "정상적으로 글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+    }
 
     companion object {
         var upload_start_year = 0
