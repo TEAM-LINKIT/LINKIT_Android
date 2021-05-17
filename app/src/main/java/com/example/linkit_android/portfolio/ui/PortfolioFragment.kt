@@ -46,8 +46,6 @@ class PortfolioFragment : Fragment() {
 
         initPortfolioContent()
 
-        initProjectRecyclerView()
-
         initToolRecyclerView()
 
         initFieldRecyclerView()
@@ -59,6 +57,8 @@ class PortfolioFragment : Fragment() {
         initIntroductionBtn()
 
         initEducationBtn()
+
+        initProjectBtn()
     }
 
     /* 기존 DB에 저장되어 있던 값이 있다면 로드 */
@@ -87,15 +87,27 @@ class PortfolioFragment : Fragment() {
                             binding.tvMajor.visibility = View.GONE
                         }
                         else {
-
                             binding.tvSchool.text = snapshot.child("0").value.toString()
                             binding.tvMajor.text = snapshot.child("1").value.toString()
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
-    }
 
+        databaseReference.child("users").child(uid).child("portfolio").child("project")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.exists()) {
+                            binding.tvNoneProject.visibility = View.VISIBLE
+                            binding.recyclerviewProject.visibility = View.GONE
+                        }
+                        else {
+                            initProjectRecyclerView()
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+    }
 
     private fun initIntroductionBtn() {
         binding.btnEditIntroduce.setOnClickListener {
@@ -111,8 +123,17 @@ class PortfolioFragment : Fragment() {
         }
     }
 
+    private fun initProjectBtn() {
+        binding.btnEditProject.setOnClickListener {
+            val intent = Intent(context!!, ProjectActivity::class.java)
+            startActivityForResult(intent, 3)
+        }
+    }
 
     private fun initProjectRecyclerView() {
+        val uid = SharedPreferenceController.getUid(context!!).toString()
+        var projectList = mutableListOf<ProjectData>()
+
         projectAdapter = ProjectAdapter(context!!)
 
         binding.recyclerviewProject.apply {
@@ -120,11 +141,18 @@ class PortfolioFragment : Fragment() {
             layoutManager = LinearLayoutManager(context!!)
         }
 
-        projectAdapter.data = mutableListOf(
-                ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "DayBreak", "당신의 하루를 깨우는 습관 형성 앱", false),
-                ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "LINK IT", "IT 프로젝트 팀 빌딩 & 네트워킹 플랫폼", false)
-        )
-        projectAdapter.notifyDataSetChanged()
+        databaseReference.child("users").child(uid).child("portfolio").child("project")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for(item in snapshot.children) {
+                            projectList.add(ProjectData(item.child("0").value.toString(), item.child("1").value.toString(),
+                                    item.child("2").value.toString(), item.child("3").value.toString()))
+                        }
+                        projectAdapter.data = projectList
+                        projectAdapter.notifyDataSetChanged()
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
     }
 
     private fun initToolRecyclerView() {
@@ -182,9 +210,7 @@ class PortfolioFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 1 -> {
-                    /* getStringExtra()는 인텐트 값 가지고 오는 */
                     binding.tvContentIntroduce.text = data!!.getStringExtra("introductionContent")
-                    /* 기존 내용 다 지우고 저장 누른 경우 */
                     if(binding.tvContentIntroduce.text == "") {
                         binding.tvNoneIntroduce.visibility = View.VISIBLE
                         binding.tvContentIntroduce.visibility = View.GONE
@@ -197,7 +223,7 @@ class PortfolioFragment : Fragment() {
                 2 -> {
                     val educationContentList = data!!.getStringArrayListExtra("educationContentList")
                     binding.tvSchool.text = educationContentList!![0].toString()
-                    binding.tvMajor.text = educationContentList!![1].toString()
+                    binding.tvMajor.text = educationContentList[1].toString()
 
                     if (binding.tvSchool.text == "" && binding.tvMajor.text == "") {
                         binding.tvNoneEducation.visibility = View.VISIBLE
@@ -210,6 +236,12 @@ class PortfolioFragment : Fragment() {
                         binding.tvMajor.visibility = View.VISIBLE
                         binding.tvSchool.visibility = View.VISIBLE
                     }
+                }
+
+                3 -> {
+                    binding.tvNoneProject.visibility = View.GONE
+                    binding.recyclerviewProject.visibility = View.VISIBLE
+                    initProjectRecyclerView()
                 }
             }
         }

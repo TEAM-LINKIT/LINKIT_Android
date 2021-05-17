@@ -50,8 +50,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         projectAdapter.data = mutableListOf(
-            ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "DayBreak", "당신의 하루를 깨우는 습관 형성 앱", true),
-            ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "LINK IT", "IT 프로젝트 팀 빌딩 & 네트워킹 플랫폼", true)
+            ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "DayBreak", "당신의 하루를 깨우는 습관 형성 앱", ""),
+            ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "LINK IT", "IT 프로젝트 팀 빌딩 & 네트워킹 플랫폼", "")
         )
         projectAdapter.notifyDataSetChanged()
     }
@@ -101,8 +101,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         recommendAdapter.data = mutableListOf(
-            ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "김안드", "강희원님을 추천합니다.", false),
-            ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "고구마", "재미있게 프로젝트 했습니다!", false)
+            ProjectData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg", "김안드", "강희원님을 추천합니다.", ""),
+            ProjectData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg", "고구마", "재미있게 프로젝트 했습니다!", "")
         )
         recommendAdapter.notifyDataSetChanged()
     }
