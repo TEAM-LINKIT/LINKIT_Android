@@ -4,5 +4,5 @@ data class ProjectData (
         val projectImg: String,
         val title: String,
         val content: String,
-        val link: Boolean
+        val link: String
         )
