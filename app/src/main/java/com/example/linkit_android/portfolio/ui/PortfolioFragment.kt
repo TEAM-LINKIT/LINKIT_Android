@@ -2,7 +2,6 @@ package com.example.linkit_android.portfolio.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +44,8 @@ class PortfolioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initPortfolioContent()
+
+        initProjectRecyclerView()
 
         initToolRecyclerView()
 
@@ -93,20 +94,6 @@ class PortfolioFragment : Fragment() {
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
-
-        databaseReference.child("users").child(uid).child("portfolio").child("project")
-                .addListenerForSingleValueEvent(object: ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (!snapshot.exists()) {
-                            binding.tvNoneProject.visibility = View.VISIBLE
-                            binding.recyclerviewProject.visibility = View.GONE
-                        }
-                        else {
-                            initProjectRecyclerView()
-                        }
-                    }
-                    override fun onCancelled(error: DatabaseError) {}
-                })
     }
 
     private fun initIntroductionBtn() {
@@ -144,12 +131,18 @@ class PortfolioFragment : Fragment() {
         databaseReference.child("users").child(uid).child("portfolio").child("project")
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        for(item in snapshot.children) {
-                            projectList.add(ProjectData(item.child("0").value.toString(), item.child("1").value.toString(),
-                                    item.child("2").value.toString(), item.child("3").value.toString()))
+                        if (!snapshot.exists()) {
+                            binding.tvNoneProject.visibility = View.VISIBLE
+                            binding.recyclerviewProject.visibility = View.GONE
                         }
-                        projectAdapter.data = projectList
-                        projectAdapter.notifyDataSetChanged()
+                        else {
+                            for(item in snapshot.children) {
+                                projectList.add(ProjectData(item.child("projectImg").value.toString(), item.child("title").value.toString(),
+                                        item.child("content").value.toString(), item.child("link").value.toString()))
+                            }
+                            projectAdapter.data = projectList
+                            projectAdapter.notifyDataSetChanged()
+                        }
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })

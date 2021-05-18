@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.linkit_android.databinding.ActivityProjectBinding
+import com.example.linkit_android.portfolio.adapter.ProjectData
 import com.example.linkit_android.util.SharedPreferenceController
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -45,16 +46,16 @@ class ProjectActivity : AppCompatActivity() {
 
         initSaveBtn()
 
+        initBackBtn()
+
         initProjectImgBtn()
 
     }
 
-    /* project link 제외하고 누락된 내용이 있으면 알림을 띄운다 */
-
     private fun initSaveBtn() {
         binding.btnSave.setOnClickListener {
-            if(binding.etProjectName.text.toString().isEmpty() || binding.etContentProject.text.toString().isEmpty() ||
-                    !this::projectImg.isInitialized) {
+            if(binding.etProjectName.text.toString().isEmpty() || binding.etContentProject.text.toString().isEmpty()
+                    || binding.etProjectLink.text.toString().isEmpty() || !this::projectImg.isInitialized)  {
                 Toast.makeText(this, "모든 항목을 입력해 주세요", Toast.LENGTH_SHORT).show()
             }
 
@@ -62,6 +63,12 @@ class ProjectActivity : AppCompatActivity() {
                 pushProjectToServer()
                 goToPortfolioFragment()
             }
+        }
+    }
+
+    private fun initBackBtn() {
+        binding.btnBack.setOnClickListener {
+            goToPortfolioFragment()
         }
     }
 
@@ -145,10 +152,10 @@ class ProjectActivity : AppCompatActivity() {
         val simpleDateForm = SimpleDateFormat("yyyyMMddhhmmss")
         val projectName = simpleDateForm.format(Date())
         val uid = SharedPreferenceController.getUid(this).toString()
-        var projectList = mutableListOf<String>(projectImg, binding.etProjectName.text.toString(),
+        var projectdata = ProjectData(projectImg, binding.etProjectName.text.toString(),
                 binding.etContentProject.text.toString(), binding.etProjectLink.text.toString())
         databaseReference.child("users").child(uid).child("portfolio").child("project")
-                .child(projectName).setValue(projectList)
+                .child(projectName).setValue(projectdata)
     }
 
     private fun goToPortfolioFragment() {
