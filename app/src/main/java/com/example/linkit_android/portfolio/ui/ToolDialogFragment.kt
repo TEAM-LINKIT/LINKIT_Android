@@ -1,5 +1,6 @@
 package com.example.linkit_android.portfolio.ui
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -48,7 +49,7 @@ class ToolDialogFragment : DialogFragment() {
 
         setPref()
 
-        getIntentValue()
+        getBundle()
 
         setRecyclerViewVisibility(inputToolList)
 
@@ -63,20 +64,16 @@ class ToolDialogFragment : DialogFragment() {
         initCancel()
     }
 
-    /*
-        PortfolioFragment
-        1. firebase에서 data 불러오기 -> 없으면 내용이 없습니다 출력 (onResume)
-        2. 불러온 data intent에 담아 ToolDialogFrag로 보내기
-        3. ToolDialogFrag에서 intent 받기
-    */
-
     private fun setPref() {
         uid = SharedPreferenceController.getUid(context!!).toString()
     }
 
-    private fun getIntentValue() {
-        // Todo: intent로 받아온 배열 값이 empty가 아니면 inputToolList에 넣어주고, empty일 경우 inputToolList를 mutableListOf()로 초기화
-        inputToolList = mutableListOf()
+    private fun getBundle() {
+        val toolList = arguments!!.getStringArrayList("toolList")!!
+        inputToolList = if (toolList.isEmpty())
+            mutableListOf()
+        else
+            toolList
     }
 
     private fun setRecyclerViewVisibility(data: MutableList<String>) {
@@ -207,6 +204,12 @@ class ToolDialogFragment : DialogFragment() {
             hideKeyboard(context!!, binding.etContent)
             this.dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        val portfolioFragment = parentFragment
+        portfolioFragment!!.onResume()
     }
 
     override fun onResume() {

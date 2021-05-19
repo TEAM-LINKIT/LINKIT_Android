@@ -19,7 +19,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.firebase.database.*
 
-
 class PortfolioFragment : Fragment() {
 
     private var _binding: FragmentPortfolioBinding? = null
@@ -31,6 +30,9 @@ class PortfolioFragment : Fragment() {
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var toolAdapter: TagAdapter
     private lateinit var fieldAdapter: TagAdapter
+
+    private lateinit var toolList: ArrayList<String>
+    private lateinit var fieldList: ArrayList<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +52,8 @@ class PortfolioFragment : Fragment() {
         initToolRecyclerView()
 
         initFieldRecyclerView()
+
+        getTagDataFromFirebase()
 
         initToolEditBtn()
 
@@ -119,7 +123,7 @@ class PortfolioFragment : Fragment() {
 
     private fun initProjectRecyclerView() {
         val uid = SharedPreferenceController.getUid(context!!).toString()
-        var projectList = mutableListOf<ProjectData>()
+        val projectList = mutableListOf<ProjectData>()
 
         projectAdapter = ProjectAdapter(context!!)
 
@@ -149,8 +153,8 @@ class PortfolioFragment : Fragment() {
     }
 
     private fun initToolRecyclerView() {
+        toolList = arrayListOf()
         toolAdapter = TagAdapter(context!!)
-
         FlexboxLayoutManager(context!!).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
@@ -159,16 +163,11 @@ class PortfolioFragment : Fragment() {
             binding.recyclerviewTool.layoutManager = it
             binding.recyclerviewTool.adapter = toolAdapter
         }
-
-        toolAdapter.apply {
-            data = mutableListOf("여기는 협업툴 자리", "Github", "Slack", "Notion", "Trello", "Figma")
-            notifyDataSetChanged()
-        }
     }
 
     private fun initFieldRecyclerView() {
+        fieldList = arrayListOf()
         fieldAdapter = TagAdapter(context!!)
-
         FlexboxLayoutManager(context!!).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
@@ -177,16 +176,67 @@ class PortfolioFragment : Fragment() {
             binding.recyclerviewField.layoutManager = it
             binding.recyclerviewField.adapter = fieldAdapter
         }
+    }
 
-        fieldAdapter.apply {
-            data = mutableListOf("여기는 활동 분야 자리", "Android", "Kotlin", "GitHub", "Java")
-            notifyDataSetChanged()
+    private fun getTagDataFromFirebase() {
+        val uid = SharedPreferenceController.getUid(context!!).toString()
+        databaseReference.child("users").child(uid).child("portfolio")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        toolList.clear()
+                        if (snapshot.child("tool").exists())
+                            for (item in snapshot.child("tool").children)
+                                toolList.add(item.value.toString())
+                        else
+                            toolList = arrayListOf()
+                        bindToolData()
+
+                        fieldList.clear()
+                        if (snapshot.child("field").exists())
+                            for (item in snapshot.child("field").children)
+                                fieldList.add(item.value.toString())
+                        else
+                            fieldList = arrayListOf()
+                        bindFieldData()
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+    }
+
+    private fun bindToolData() {
+        if (toolList.isEmpty()) {
+            binding.recyclerviewTool.visibility = View.GONE
+            binding.tvNoneTool.visibility = View.VISIBLE
+        } else {
+            binding.recyclerviewTool.visibility = View.VISIBLE
+            binding.tvNoneTool.visibility = View.GONE
+            toolAdapter.apply {
+                data = toolList
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    private fun bindFieldData() {
+        if (fieldList.isEmpty()) {
+            binding.recyclerviewField.visibility = View.GONE
+            binding.tvNoneField.visibility = View.VISIBLE
+        } else {
+            binding.recyclerviewField.visibility = View.VISIBLE
+            binding.tvNoneField.visibility = View.GONE
+            fieldAdapter.apply {
+                data = fieldList
+                notifyDataSetChanged()
+            }
         }
     }
 
     private fun initToolEditBtn() {
         binding.btnEditTool.setOnClickListener {
             val toolDialog = ToolDialogFragment()
+            val args = Bundle()
+            args.putStringArrayList("toolList", toolList)
+            toolDialog.arguments = args
             toolDialog.show(childFragmentManager, "tool_dialog")
         }
     }
@@ -194,6 +244,9 @@ class PortfolioFragment : Fragment() {
     private fun initFieldEditBtn() {
         binding.btnEditField.setOnClickListener {
             val fieldDialog = FieldDialogFragment()
+            val args = Bundle()
+            args.putStringArrayList("fieldList", fieldList)
+            fieldDialog.arguments = args
             fieldDialog.show(childFragmentManager, "field_dialog")
         }
     }
@@ -238,6 +291,16 @@ class PortfolioFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        getTagDataFromFirebase()
+
+        initToolEditBtn()
+
+        initFieldEditBtn()
     }
 
     override fun onDestroyView() {
