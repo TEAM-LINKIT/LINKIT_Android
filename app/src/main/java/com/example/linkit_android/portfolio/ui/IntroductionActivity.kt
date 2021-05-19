@@ -21,8 +21,13 @@ class IntroductionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityIntroductionBinding.inflate(layoutInflater)
         val view = binding.root
+
         setContentView(view)
+
         initSaveBtn()
+
+        initBackBtn()
+
         pullIntroductionFromServer()
     }
 
@@ -45,6 +50,14 @@ class IntroductionActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             pushIntroductionToServer()
             goToPortfolioFragment()
+        }
+    }
+
+    private fun initBackBtn() {
+        binding.btnBack.setOnClickListener {
+            var intent = Intent(this, PortfolioFragment::class.java)
+            setResult(Activity.RESULT_CANCELED, intent)
+            finish()
         }
     }
 

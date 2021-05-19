@@ -21,9 +21,14 @@ class EducationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEducationBinding.inflate(layoutInflater)
         var view = binding.root
+
         setContentView(view)
+
         pullEducationFromServer()
+
         initSaveBtn()
+
+        initBackBtn()
     }
 
     private fun pullEducationFromServer() {
@@ -52,6 +57,14 @@ class EducationActivity : AppCompatActivity() {
                 pushEducationToServer()
                 goToPortfolioFragment()
             }
+        }
+    }
+
+    private fun initBackBtn() {
+        binding.btnBack.setOnClickListener {
+            var intent = Intent(this, PortfolioFragment::class.java)
+            setResult(Activity.RESULT_CANCELED, intent)
+            finish()
         }
     }
 
