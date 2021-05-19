@@ -1,5 +1,6 @@
 package com.example.linkit_android.portfolio.ui
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -48,7 +49,7 @@ class FieldDialogFragment : DialogFragment() {
 
         setPref()
 
-        getIntentValue()
+        getBundle()
 
         setRecyclerViewVisibility(inputFieldList)
 
@@ -67,8 +68,12 @@ class FieldDialogFragment : DialogFragment() {
         uid = SharedPreferenceController.getUid(context!!).toString()
     }
 
-    private fun getIntentValue() {
-        inputFieldList = mutableListOf()
+    private fun getBundle() {
+        val fieldList = arguments!!.getStringArrayList("fieldList")!!
+        inputFieldList = if (fieldList.isEmpty())
+            mutableListOf()
+        else
+            fieldList
     }
 
     private fun setRecyclerViewVisibility(data: MutableList<String>) {
@@ -199,6 +204,12 @@ class FieldDialogFragment : DialogFragment() {
             hideKeyboard(context!!, binding.etContent)
             this.dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        val portfolioFragment = parentFragment
+        portfolioFragment!!.onResume()
     }
 
     override fun onResume() {
