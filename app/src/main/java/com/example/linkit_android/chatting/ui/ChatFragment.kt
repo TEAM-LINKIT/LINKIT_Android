@@ -1,5 +1,6 @@
 package com.example.linkit_android.chatting.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.example.linkit_android.chatting.adapter.ChatListAdapter
 import com.example.linkit_android.chatting.adapter.ChatListData
 import com.example.linkit_android.databinding.FragmentChatBinding
 import com.example.linkit_android.model.ChatModel
+import com.example.linkit_android.util.ItemClickListener
 import com.example.linkit_android.util.SharedPreferenceController
 import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
@@ -22,6 +24,7 @@ class ChatFragment : Fragment() {
     private lateinit var uid: String
 
     private lateinit var chatListAdapter: ChatListAdapter
+    private lateinit var userList: MutableList<String>
 
     private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference: DatabaseReference = firebaseDatabase.reference
@@ -60,6 +63,8 @@ class ChatFragment : Fragment() {
         databaseReference.child("chat").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 chatListAdapter.data.clear()
+                userList = mutableListOf()
+                userList.clear()
                 for (item in snapshot.children) {
                     val itemId = item.key.toString()
                     databaseReference.child("chat").child(itemId).child("users")
@@ -70,10 +75,12 @@ class ChatFragment : Fragment() {
                                     if (snapshot.child("0").value.toString() == uid) {
                                         chatRoomId = itemId
                                         destUserId = snapshot.child("1").value.toString()
+                                        userList.add(destUserId)
                                         getLastComment(chatRoomId, destUserId)
                                     } else if (snapshot.child("1").value.toString() == uid) {
                                         chatRoomId = itemId
                                         destUserId = snapshot.child("0").value.toString()
+                                        userList.add(destUserId)
                                         getLastComment(chatRoomId, destUserId)
                                     }
                                 }
@@ -111,9 +118,21 @@ class ChatFragment : Fragment() {
                         val part = getPartString(snapshot.child("userPart").value.toString().toInt())
                         chatListAdapter.data.add(ChatListData(profileImg, name, part, lastComment))
                         chatListAdapter.notifyDataSetChanged()
+                        initItemClickListener()
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
+    }
+
+    private fun initItemClickListener() {
+        chatListAdapter.setItemClickListener(object: ItemClickListener {
+            override fun onClickItem(view: View, position: Int) {
+                val chatRoomId = userList[position]
+                val intent = Intent(context!!, ChatRoomActivity::class.java)
+                intent.putExtra("chatRoomId", chatRoomId)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onDestroyView() {
