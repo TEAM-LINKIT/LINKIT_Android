@@ -53,7 +53,7 @@ class ChatRoomActivity : AppCompatActivity() {
     private fun getIntentValue() {
         chatRoomId = null
         // Todo: ChatFragment, ProfileActivity에서 받아온 intent destId에 넣어주기
-        destUid = "0JCQiGEERzMcLI7AB83gGeF4oVP2"
+        destUid = "jDuFvb1biHYktuGjGEioPGuhR8j2"
     }
 
     private fun setPref() {
@@ -80,7 +80,7 @@ class ChatRoomActivity : AppCompatActivity() {
             adapter = chatAdapter
             layoutManager = LinearLayoutManager(this@ChatRoomActivity)
         }
-        findChatRoomId()
+        findChatRoomId(false)
     }
 
     private fun getChatData() {
@@ -99,9 +99,9 @@ class ChatRoomActivity : AppCompatActivity() {
         for (item in data.children) {
             val chatData = item.getValue(ChatModel::class.java)
             if (chatData!!.uid.equals(uid))
-                chatAdapter.data.add(ChatData(chatData.message!!, 0))
-            else
                 chatAdapter.data.add(ChatData(chatData.message!!, 1))
+            else
+                chatAdapter.data.add(ChatData(chatData.message!!, 0))
         }
         chatAdapter.notifyDataSetChanged()
         binding.recyclerviewChat.scrollToPosition(chatAdapter.data.size - 1)
@@ -121,13 +121,14 @@ class ChatRoomActivity : AppCompatActivity() {
             if (chatRoomId == null)
                 databaseReference.child("chat").push().child("users")
                         .setValue(userList).addOnSuccessListener {
-                            findChatRoomId()
+                            findChatRoomId(true)
                         }
-            pushComment()
+            else
+                pushComment()
         }
     }
 
-    private fun findChatRoomId() {
+    private fun findChatRoomId(commentExist: Boolean) {
         databaseReference.child("chat").addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (item in snapshot.children) {
@@ -142,6 +143,8 @@ class ChatRoomActivity : AppCompatActivity() {
                                             || (userList[0] == destUid && userList[1] == uid)) {
                                         chatRoomId = itemId
                                         getChatData()
+                                        if (commentExist)
+                                            pushComment()
                                     }
                                 }
                                 override fun onCancelled(error: DatabaseError) {}
