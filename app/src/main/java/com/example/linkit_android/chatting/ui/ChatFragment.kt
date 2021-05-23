@@ -1,5 +1,6 @@
 package com.example.linkit_android.chatting.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,13 +10,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkit_android.chatting.adapter.ChatListAdapter
 import com.example.linkit_android.chatting.adapter.ChatListData
 import com.example.linkit_android.databinding.FragmentChatBinding
+import com.example.linkit_android.model.ChatModel
+import com.example.linkit_android.util.ItemClickListener
+import com.example.linkit_android.util.SharedPreferenceController
+import com.example.linkit_android.util.getPartString
+import com.google.firebase.database.*
 
 class ChatFragment : Fragment() {
 
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var uid: String
+
     private lateinit var chatListAdapter: ChatListAdapter
+    private lateinit var userList: MutableList<String>
+
+    private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference: DatabaseReference = firebaseDatabase.reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,28 +40,99 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setPref()
+
         initChatListRecyclerView()
+
+        checkMyChatRoom()
+    }
+
+    private fun setPref() {
+        uid = SharedPreferenceController.getUid(context!!).toString()
     }
 
     private fun initChatListRecyclerView() {
         chatListAdapter = ChatListAdapter(context!!)
-
         binding.recyclerviewChat.apply {
             adapter = chatListAdapter
             layoutManager = LinearLayoutManager(context!!)
         }
+    }
 
-        chatListAdapter.apply {
-            data = mutableListOf(
-                    ChatListData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg",
-                            "김영만", "프론트엔드 개발", "네 작년 하반기 진행된 해커톤에 나갔습니다."),
-                    ChatListData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg",
-                            "고구마", "백엔드 개발", "서울에 거주하고 있습니다."),
-                    ChatListData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg",
-                            "김모피", "기획", "안녕하세요! 프론트엔드 개발 파트 지원하고 싶은 강희원입니다. 다름이 아니라 ")
-            )
-            notifyDataSetChanged()
-        }
+    private fun checkMyChatRoom() {
+        databaseReference.child("chat").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                chatListAdapter.data.clear()
+                userList = mutableListOf()
+                userList.clear()
+                for (item in snapshot.children) {
+                    val itemId = item.key.toString()
+                    databaseReference.child("chat").child(itemId).child("users")
+                            .addListenerForSingleValueEvent(object: ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    var chatRoomId = ""
+                                    var destUserId = ""
+                                    if (snapshot.child("0").value.toString() == uid) {
+                                        chatRoomId = itemId
+                                        destUserId = snapshot.child("1").value.toString()
+                                        userList.add(destUserId)
+                                        getLastComment(chatRoomId, destUserId)
+                                    } else if (snapshot.child("1").value.toString() == uid) {
+                                        chatRoomId = itemId
+                                        destUserId = snapshot.child("0").value.toString()
+                                        userList.add(destUserId)
+                                        getLastComment(chatRoomId, destUserId)
+                                    }
+                                }
+                                override fun onCancelled(error: DatabaseError) {}
+                            })
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun getLastComment(chatRoomId: String, destUserId: String) {
+        var lastComment = ""
+        databaseReference.child("chat").child(chatRoomId).child("comments")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for ((count,item) in snapshot.children.withIndex()) {
+                            if (count == snapshot.childrenCount.toString().toInt() - 1) {
+                                val chatItem = item.getValue(ChatModel::class.java)
+                                lastComment = chatItem!!.message.toString()
+                                bindDateToRecyclerView(destUserId, lastComment)
+                            }
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+    }
+
+    private fun bindDateToRecyclerView(destUserId: String, lastComment: String) {
+        databaseReference.child("users").child(destUserId)
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val profileImg = snapshot.child("profileImg").value.toString()
+                        val name = snapshot.child("userName").value.toString()
+                        val part = getPartString(snapshot.child("userPart").value.toString().toInt())
+                        chatListAdapter.data.add(ChatListData(profileImg, name, part, lastComment))
+                        chatListAdapter.notifyDataSetChanged()
+                        initItemClickListener()
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+    }
+
+    private fun initItemClickListener() {
+        chatListAdapter.setItemClickListener(object: ItemClickListener {
+            override fun onClickItem(view: View, position: Int) {
+                val chatRoomId = userList[position]
+                val intent = Intent(context!!, ChatRoomActivity::class.java)
+                intent.putExtra("chatRoomId", chatRoomId)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onDestroyView() {

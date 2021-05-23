@@ -52,8 +52,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
     private fun getIntentValue() {
         chatRoomId = null
-        // Todo: ChatFragment, ProfileActivity에서 받아온 intent destId에 넣어주기
-        destUid = "jDuFvb1biHYktuGjGEioPGuhR8j2"
+        destUid = intent.getStringExtra("chatRoomId").toString()
     }
 
     private fun setPref() {
