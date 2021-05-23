@@ -8,10 +8,15 @@ import com.example.linkit_android.chatting.adapter.ChatAdapter
 import com.example.linkit_android.chatting.adapter.ChatData
 import com.example.linkit_android.databinding.ActivityChatRoomBinding
 import com.example.linkit_android.model.ChatModel
+import com.example.linkit_android.model.NotificationModel
 import com.example.linkit_android.model.UserModel
 import com.example.linkit_android.util.SharedPreferenceController
 import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
+import com.google.gson.Gson
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import java.io.IOException
 
 class ChatRoomActivity : AppCompatActivity() {
 
@@ -21,6 +26,8 @@ class ChatRoomActivity : AppCompatActivity() {
 
     private lateinit var uid: String
     private lateinit var destUid: String
+    private lateinit var destUserName: String
+    private lateinit var destPushToken: String
     private var chatRoomId: String? = null
 
     private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -63,8 +70,10 @@ class ChatRoomActivity : AppCompatActivity() {
         databaseReference.child("users").child(destUid).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val opponentProfile = snapshot.getValue(UserModel::class.java)
+                destPushToken = opponentProfile!!.pushToken.toString()
                 binding.apply {
-                    tvName.text = opponentProfile!!.userName.toString()
+                    destUserName = opponentProfile.userName.toString()
+                    tvName.text = destUserName
                     tvPart.text = getPartString(opponentProfile.userPart!!)
                     Glide.with(this@ChatRoomActivity).load(opponentProfile.profileImg).into(binding.imgProfile)
                 }
@@ -155,12 +164,46 @@ class ChatRoomActivity : AppCompatActivity() {
     }
 
     private fun pushComment() {
+        val chatContent = binding.etChatContent.text.toString()
         val chatModel = ChatModel()
         chatModel.uid = uid
-        chatModel.message = binding.etChatContent.text.toString()
+        chatModel.message = chatContent
         databaseReference.child("chat").child(chatRoomId!!)
                 .child("comments").push().setValue(chatModel)
-        binding.etChatContent.setText("")
+        sendFcm(chatContent)
+    }
+
+    private fun sendFcm(pushMessage: String) {
+        val gson = Gson()
+        val notificationModel = NotificationModel()
+
+        notificationModel.apply {
+            to = destPushToken
+            notification.title = destUserName
+            notification.content = pushMessage
+        }
+        notificationModel.data.apply {
+            title = destUserName
+            content = pushMessage
+        }
+
+        val requestBody = RequestBody.create("application/json; charset=utf8".toMediaTypeOrNull(),
+            gson.toJson(notificationModel))
+
+        val request = Request.Builder()
+            .header("Content-Type", "application/json")
+            .addHeader("Authorization", "key=AAAAE_OflkE:APA91bHApt6oyK9MzvIiADDqTYznEs_PMZndn85Oh5t1ju3_ZUznl90RDEeR9KPsgGiApJYAOuw1sjCrgr1VtXVo315hczN7ZGeA_ldkcBXPuwgFqM9mloEXc70lbqJ4P-rV79o_FInv")
+            .url("https://fcm.googleapis.com/fcm/send")
+            .post(requestBody)
+            .build()
+
+        val okHttpClient = OkHttpClient()
+        okHttpClient.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {}
+            override fun onResponse(call: Call, response: Response) {
+                binding.etChatContent.setText("")
+            }
+        })
     }
 
     private fun initBackBtn() {
