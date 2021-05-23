@@ -59,6 +59,7 @@ class ChatFragment : Fragment() {
     private fun checkMyChatRoom() {
         databaseReference.child("chat").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                chatListAdapter.data.clear()
                 for (item in snapshot.children) {
                     val itemId = item.key.toString()
                     databaseReference.child("chat").child(itemId).child("users")
@@ -87,7 +88,7 @@ class ChatFragment : Fragment() {
     private fun getLastComment(chatRoomId: String, destUserId: String) {
         var lastComment = ""
         databaseReference.child("chat").child(chatRoomId).child("comments")
-                .addValueEventListener(object: ValueEventListener {
+                .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for ((count,item) in snapshot.children.withIndex()) {
                             if (count == snapshot.childrenCount.toString().toInt() - 1) {
