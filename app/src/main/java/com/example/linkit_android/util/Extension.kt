@@ -34,3 +34,14 @@ fun hideKeyboard(context: Context, editText: EditText) {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(editText.windowToken, 0)
 }
+
+/* return partName */
+fun getPartString(partIdx: Int) : String {
+    return when (partIdx) {
+        0 -> "기획"
+        1 -> "디자인"
+        2 -> "프론트엔드 개발"
+        3 -> "백엔드 개발"
+        else -> "error"
+    }
+}

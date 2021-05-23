@@ -1,10 +1,10 @@
 package com.example.linkit_android.model
 
 data class UserModel (
-    val uid: String,
-    val id: String,
-    val userName: String,
-    val userPart: Int,
-    val profileImg: String,
-    val pushToken: String
+    var uid: String? = null,
+    var id: String? = null,
+    var userName: String? = null,
+    var userPart: Int? = null,
+    var profileImg: String? = null,
+    var pushToken: String?= null
         )
