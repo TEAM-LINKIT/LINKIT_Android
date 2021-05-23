@@ -15,7 +15,7 @@ import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType.Companion.toMediaType
 import java.io.IOException
 
 class ChatRoomActivity : AppCompatActivity() {
@@ -169,8 +169,9 @@ class ChatRoomActivity : AppCompatActivity() {
         chatModel.uid = uid
         chatModel.message = chatContent
         databaseReference.child("chat").child(chatRoomId!!)
-                .child("comments").push().setValue(chatModel)
-        sendFcm(chatContent)
+                .child("comments").push().setValue(chatModel).addOnSuccessListener {
+                sendFcm(chatContent)
+            }
     }
 
     private fun sendFcm(pushMessage: String) {
@@ -180,14 +181,14 @@ class ChatRoomActivity : AppCompatActivity() {
         notificationModel.apply {
             to = destPushToken
             notification.title = destUserName
-            notification.content = pushMessage
+            notification.text = pushMessage
         }
         notificationModel.data.apply {
             title = destUserName
-            content = pushMessage
+            text = pushMessage
         }
 
-        val requestBody = RequestBody.create("application/json; charset=utf8".toMediaTypeOrNull(),
+        val requestBody = RequestBody.create("application/json; charset=utf8".toMediaType(),
             gson.toJson(notificationModel))
 
         val request = Request.Builder()

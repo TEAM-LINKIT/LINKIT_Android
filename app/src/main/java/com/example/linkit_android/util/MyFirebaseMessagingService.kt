@@ -20,17 +20,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val TAG = "FirebaseService"
 
     override fun onNewToken(token: String) {
-        super.onNewToken(token)
         Log.d(TAG, "new Token: $token")
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        super.onMessageReceived(remoteMessage)
         Log.d(TAG, "from: " + remoteMessage.from)
 
         if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "body: " + remoteMessage.data["body"].toString())
-            Log.d(TAG, "title: " + remoteMessage.data["title"].toString())
+            Log.d(TAG, "body: " + remoteMessage.data["text"])
+            Log.d(TAG, "title: " + remoteMessage.data["title"])
             sendNotification(remoteMessage)
         } else {
             Log.d("error", "메시지를 수신하지 못했습니다.")
@@ -53,8 +51,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(remoteMessage.data["body"].toString())
-            .setContentText(remoteMessage.data["title"].toString())
+            .setContentTitle(remoteMessage.data["title"])
+            .setContentText(remoteMessage.data["text"])
             .setAutoCancel(true)
             .setSound(soundUri)
             .setPriority(Notification.PRIORITY_HIGH)

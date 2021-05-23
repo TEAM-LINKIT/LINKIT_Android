@@ -8,12 +8,12 @@ class NotificationModel {
     // background push
     inner class Notification {
         lateinit var title: String
-        lateinit var content: String
+        lateinit var text: String
     }
 
     // foreground push
     inner class Data {
         lateinit var title: String
-        lateinit var content: String
+        lateinit var text: String
     }
 }
