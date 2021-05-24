@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.linkit_android.R
 import com.example.linkit_android.chatting.adapter.ChatAdapter
 import com.example.linkit_android.chatting.adapter.ChatData
 import com.example.linkit_android.databinding.ActivityChatRoomBinding
@@ -181,13 +182,15 @@ class ChatRoomActivity : AppCompatActivity() {
         notificationModel.apply {
             to = destPushToken
             notification.title = destUserName
-            notification.text = pushMessage
+            notification.body = pushMessage
             notification.data = uid
+            notification.android_channel_id = getString(R.string.firebase_notification_channel_id)
         }
         notificationModel.data.apply {
             title = destUserName
             text = pushMessage
             data = uid
+            android_channel_id = getString(R.string.firebase_notification_channel_id)
         }
 
         val requestBody = RequestBody.create("application/json; charset=utf8".toMediaType(),

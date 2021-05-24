@@ -8,8 +8,9 @@ class NotificationModel {
     // background push
     inner class Notification {
         lateinit var title: String
-        lateinit var text: String
+        lateinit var body: String
         lateinit var data: String
+        lateinit var android_channel_id: String
     }
 
     // foreground push
@@ -17,5 +18,6 @@ class NotificationModel {
         lateinit var title: String
         lateinit var text: String
         lateinit var data: String
+        lateinit var android_channel_id: String
     }
 }
