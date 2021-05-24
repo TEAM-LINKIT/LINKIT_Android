@@ -68,22 +68,22 @@ class CommunityFragment : Fragment() {
 
     private fun setPref() {
         SharedPreferenceController.apply {
-            userName = getUserName(context!!).toString()
-            profileImg = getProfileImg(context!!).toString()
-            userPart = getUserPart(context!!)
+            userName = getUserName(requireContext()).toString()
+            profileImg = getProfileImg(requireContext()).toString()
+            userPart = getUserPart(requireContext())
         }
     }
 
     private fun initProfile() {
         binding.apply {
             tvUserName.text = userName
-            Glide.with(context!!).load(profileImg).into(imgProfile)
+            Glide.with(requireContext()).load(profileImg).into(imgProfile)
         }
     }
 
     private fun initPartSpinner() {
         val item = resources.getStringArray(R.array.part_array)
-        val partAdapter = ArrayAdapter(context!!, R.layout.item_part_spinner, item)
+        val partAdapter = ArrayAdapter(requireContext(), R.layout.item_part_spinner, item)
         partAdapter.setDropDownViewResource(R.layout.item_part_spinner_content)
 
         binding.spinnerPart.apply {
@@ -108,10 +108,10 @@ class CommunityFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        communityAdapter = CommunityAdapter(context!!)
+        communityAdapter = CommunityAdapter(requireContext())
         binding.recyclerviewCommunity.apply {
             adapter = communityAdapter
-            layoutManager = LinearLayoutManager(context!!)
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
@@ -173,7 +173,7 @@ class CommunityFragment : Fragment() {
         communityAdapter.setItemClickListener(object: ItemClickListener {
             override fun onClickItem(view: View, position: Int) {
                 val id = postingList[position].id
-                val intent = Intent(context!!, PostingActivity::class.java)
+                val intent = Intent(requireContext(), PostingActivity::class.java)
                 intent.putExtra("postingId", id)
                 startActivity(intent)
             }
@@ -182,7 +182,7 @@ class CommunityFragment : Fragment() {
 
     private fun goToUploadActivity() {
         binding.btnUpload.setOnClickListener {
-            val intent = Intent(context!!, UploadActivity::class.java)
+            val intent = Intent(requireContext(), UploadActivity::class.java)
             startActivity(intent)
         }
     }

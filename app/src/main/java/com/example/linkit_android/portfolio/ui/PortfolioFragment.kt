@@ -68,7 +68,7 @@ class PortfolioFragment : Fragment() {
 
     /* 기존 DB에 저장되어 있던 값이 있다면 로드 */
     private fun initPortfolioContent() {
-        val uid = SharedPreferenceController.getUid(context!!).toString()
+        val uid = SharedPreferenceController.getUid(requireContext()).toString()
         databaseReference.child("users").child(uid).child("portfolio").child("introduction")
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -102,34 +102,34 @@ class PortfolioFragment : Fragment() {
 
     private fun initIntroductionBtn() {
         binding.btnEditIntroduce.setOnClickListener {
-            val intent = Intent(context!!, IntroductionActivity::class.java)
+            val intent = Intent(requireContext(), IntroductionActivity::class.java)
             startActivityForResult(intent, 1)
         }
     }
 
     private fun initEducationBtn() {
         binding.btnEditEdu.setOnClickListener {
-            val intent = Intent(context!!, EducationActivity::class.java)
+            val intent = Intent(requireContext(), EducationActivity::class.java)
             startActivityForResult(intent, 2)
         }
     }
 
     private fun initProjectBtn() {
         binding.btnEditProject.setOnClickListener {
-            val intent = Intent(context!!, ProjectActivity::class.java)
+            val intent = Intent(requireContext(), ProjectActivity::class.java)
             startActivityForResult(intent, 3)
         }
     }
 
     private fun initProjectRecyclerView() {
-        val uid = SharedPreferenceController.getUid(context!!).toString()
+        val uid = SharedPreferenceController.getUid(requireContext()).toString()
         val projectList = mutableListOf<ProjectData>()
 
-        projectAdapter = ProjectAdapter(context!!)
+        projectAdapter = ProjectAdapter(requireContext())
 
         binding.recyclerviewProject.apply {
             adapter = projectAdapter
-            layoutManager = LinearLayoutManager(context!!)
+            layoutManager = LinearLayoutManager(requireContext())
         }
 
         databaseReference.child("users").child(uid).child("portfolio").child("project")
@@ -154,8 +154,8 @@ class PortfolioFragment : Fragment() {
 
     private fun initToolRecyclerView() {
         toolList = arrayListOf()
-        toolAdapter = TagAdapter(context!!)
-        FlexboxLayoutManager(context!!).apply {
+        toolAdapter = TagAdapter(requireContext())
+        FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -167,8 +167,8 @@ class PortfolioFragment : Fragment() {
 
     private fun initFieldRecyclerView() {
         fieldList = arrayListOf()
-        fieldAdapter = TagAdapter(context!!)
-        FlexboxLayoutManager(context!!).apply {
+        fieldAdapter = TagAdapter(requireContext())
+        FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -179,7 +179,7 @@ class PortfolioFragment : Fragment() {
     }
 
     private fun getTagDataFromFirebase() {
-        val uid = SharedPreferenceController.getUid(context!!).toString()
+        val uid = SharedPreferenceController.getUid(requireContext()).toString()
         databaseReference.child("users").child(uid).child("portfolio")
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
