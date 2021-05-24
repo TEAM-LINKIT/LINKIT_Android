@@ -60,7 +60,6 @@ class ProfileActivity : AppCompatActivity() {
 
         getTagDataFromFirebase()
 
-        initRecommendComment()
     }
 
     private fun setViewBinding() {
@@ -84,23 +83,19 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecommendComment() {
+    private fun initRecommendComment(writername : String) {
         val uid = SharedPreferenceController.getUid(this!!).toString()
+        val username = SharedPreferenceController.getUserName(this!!).toString()
 
-        databaseReference.child("users").addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                binding.tvRecommend.text = snapshot.child(uid).child("userName").value.toString() +
-                        "님,\n" + snapshot.child(writerId).child("userName").value.toString() + "님을 추천해주세요."
-            }
-            override fun onCancelled(error: DatabaseError) {}
-        })
+        binding.tvRecommend.text = username + "님,\n" + writername + "님을 추천해주세요."
     }
 
     private fun initProfile() {
         databaseReference.child("users").child(writerId).addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        val writerName = snapshot.child("userName").value.toString()
 
-                        binding.tvName.text = snapshot.child("userName").value.toString()
+                        binding.tvName.text = writerName
 
                         /* 자기소개 불러오기 */
 
@@ -146,6 +141,7 @@ class ProfileActivity : AppCompatActivity() {
                         }
 
                         Glide.with(this@ProfileActivity).load(snapshot.child("profileImg").value.toString()).into(binding.imgProfile)
+                        initRecommendComment(writerName)
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
