@@ -9,11 +9,13 @@ class NotificationModel {
     inner class Notification {
         lateinit var title: String
         lateinit var text: String
+        lateinit var data: String
     }
 
     // foreground push
     inner class Data {
         lateinit var title: String
         lateinit var text: String
+        lateinit var data: String
     }
 }

@@ -182,10 +182,12 @@ class ChatRoomActivity : AppCompatActivity() {
             to = destPushToken
             notification.title = destUserName
             notification.text = pushMessage
+            notification.data = uid
         }
         notificationModel.data.apply {
             title = destUserName
             text = pushMessage
+            data = uid
         }
 
         val requestBody = RequestBody.create("application/json; charset=utf8".toMediaType(),

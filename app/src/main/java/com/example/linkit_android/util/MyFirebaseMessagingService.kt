@@ -11,7 +11,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.linkit_android.R
-import com.example.linkit_android.login.LoginActivity
+import com.example.linkit_android.chatting.ui.ChatRoomActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -29,6 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "body: " + remoteMessage.data["text"])
             Log.d(TAG, "title: " + remoteMessage.data["title"])
+            Log.d(TAG, "data: " + remoteMessage.data["data"])
             sendNotification(remoteMessage)
         } else {
             Log.d("error", "메시지를 수신하지 못했습니다.")
@@ -39,8 +40,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun sendNotification(remoteMessage: RemoteMessage) {
         val uniId: Int = (System.currentTimeMillis() / 7).toInt()
 
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, ChatRoomActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("chatRoomId", remoteMessage.data["data"])
         val pendingIntent = PendingIntent.getActivity(this, uniId, intent, PendingIntent.FLAG_ONE_SHOT)
 
         // 알림 채널 이름
