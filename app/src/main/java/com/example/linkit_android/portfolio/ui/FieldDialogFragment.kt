@@ -65,11 +65,11 @@ class FieldDialogFragment : DialogFragment() {
     }
 
     private fun setPref() {
-        uid = SharedPreferenceController.getUid(context!!).toString()
+        uid = SharedPreferenceController.getUid(requireContext()).toString()
     }
 
     private fun getBundle() {
-        val fieldList = arguments!!.getStringArrayList("fieldList")!!
+        val fieldList = requireArguments().getStringArrayList("fieldList")!!
         inputFieldList = if (fieldList.isEmpty())
             mutableListOf()
         else
@@ -84,9 +84,9 @@ class FieldDialogFragment : DialogFragment() {
     }
 
     private fun initInputFieldRecyclerView() {
-        inputFieldAdapter = FillRedTagAdapter(context!!)
+        inputFieldAdapter = FillRedTagAdapter(requireContext())
 
-        FlexboxLayoutManager(context!!).apply {
+        FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -111,9 +111,9 @@ class FieldDialogFragment : DialogFragment() {
     }
 
     private fun initExampleFieldRecyclerView() {
-        exampleFieldAdapter = StrokeRedTagAdapter(context!!)
+        exampleFieldAdapter = StrokeRedTagAdapter(requireContext())
 
-        FlexboxLayoutManager(context!!).apply {
+        FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -176,7 +176,7 @@ class FieldDialogFragment : DialogFragment() {
                         addInputDataToRecyclerView(inputData)
                 }
             } else {
-                Toast.makeText(context!!, "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -194,14 +194,14 @@ class FieldDialogFragment : DialogFragment() {
         binding.buttonOk.setOnClickListener {
             databaseReference.child("users").child(uid).child("portfolio")
                     .child("field").setValue(inputFieldAdapter.data)
-            hideKeyboard(context!!, binding.etContent)
+            hideKeyboard(requireContext(), binding.etContent)
             this.dismiss()
         }
     }
 
     private fun initCancelBtn() {
         binding.buttonCancel.setOnClickListener {
-            hideKeyboard(context!!, binding.etContent)
+            hideKeyboard(requireContext(), binding.etContent)
             this.dismiss()
         }
     }

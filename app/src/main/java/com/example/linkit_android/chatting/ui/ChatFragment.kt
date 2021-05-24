@@ -48,14 +48,14 @@ class ChatFragment : Fragment() {
     }
 
     private fun setPref() {
-        uid = SharedPreferenceController.getUid(context!!).toString()
+        uid = SharedPreferenceController.getUid(requireContext()).toString()
     }
 
     private fun initChatListRecyclerView() {
-        chatListAdapter = ChatListAdapter(context!!)
+        chatListAdapter = ChatListAdapter(requireContext())
         binding.recyclerviewChat.apply {
             adapter = chatListAdapter
-            layoutManager = LinearLayoutManager(context!!)
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 

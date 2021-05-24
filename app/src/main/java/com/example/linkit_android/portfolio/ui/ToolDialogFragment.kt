@@ -65,11 +65,11 @@ class ToolDialogFragment : DialogFragment() {
     }
 
     private fun setPref() {
-        uid = SharedPreferenceController.getUid(context!!).toString()
+        uid = SharedPreferenceController.getUid(requireContext()).toString()
     }
 
     private fun getBundle() {
-        val toolList = arguments!!.getStringArrayList("toolList")!!
+        val toolList = requireArguments().getStringArrayList("toolList")!!
         inputToolList = if (toolList.isEmpty())
             mutableListOf()
         else
@@ -84,9 +84,9 @@ class ToolDialogFragment : DialogFragment() {
     }
 
     private fun initInputToolRecyclerView() {
-        inputToolAdapter = FillRedTagAdapter(context!!)
+        inputToolAdapter = FillRedTagAdapter(requireContext())
 
-        FlexboxLayoutManager(context!!).apply {
+        FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -111,9 +111,9 @@ class ToolDialogFragment : DialogFragment() {
     }
 
     private fun initExampleToolRecyclerView() {
-        exampleToolAdapter = StrokeRedTagAdapter(context!!)
+        exampleToolAdapter = StrokeRedTagAdapter(requireContext())
 
-        FlexboxLayoutManager(context!!).apply {
+        FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
@@ -176,7 +176,7 @@ class ToolDialogFragment : DialogFragment() {
                         addInputDataToRecyclerView(inputData)
                 }
             } else {
-                Toast.makeText(context!!, "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -194,14 +194,14 @@ class ToolDialogFragment : DialogFragment() {
         binding.buttonOk.setOnClickListener {
             databaseReference.child("users").child(uid).child("portfolio")
                     .child("tool").setValue(inputToolAdapter.data)
-            hideKeyboard(context!!, binding.etContent)
+            hideKeyboard(requireContext(), binding.etContent)
             this.dismiss()
         }
     }
 
     private fun initCancel() {
         binding.buttonCancel.setOnClickListener {
-            hideKeyboard(context!!, binding.etContent)
+            hideKeyboard(requireContext(), binding.etContent)
             this.dismiss()
         }
     }
