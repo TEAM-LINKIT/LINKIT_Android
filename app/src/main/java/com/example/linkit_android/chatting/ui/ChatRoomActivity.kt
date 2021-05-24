@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.linkit_android.R
 import com.example.linkit_android.chatting.adapter.ChatAdapter
 import com.example.linkit_android.chatting.adapter.ChatData
 import com.example.linkit_android.databinding.ActivityChatRoomBinding
@@ -15,7 +16,7 @@ import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType.Companion.toMediaType
 import java.io.IOException
 
 class ChatRoomActivity : AppCompatActivity() {
@@ -169,8 +170,9 @@ class ChatRoomActivity : AppCompatActivity() {
         chatModel.uid = uid
         chatModel.message = chatContent
         databaseReference.child("chat").child(chatRoomId!!)
-                .child("comments").push().setValue(chatModel)
-        sendFcm(chatContent)
+                .child("comments").push().setValue(chatModel).addOnSuccessListener {
+                sendFcm(chatContent)
+            }
     }
 
     private fun sendFcm(pushMessage: String) {
@@ -180,14 +182,18 @@ class ChatRoomActivity : AppCompatActivity() {
         notificationModel.apply {
             to = destPushToken
             notification.title = destUserName
-            notification.content = pushMessage
+            notification.body = pushMessage
+            notification.data = uid
+            notification.android_channel_id = getString(R.string.firebase_notification_channel_id)
         }
         notificationModel.data.apply {
             title = destUserName
-            content = pushMessage
+            text = pushMessage
+            data = uid
+            android_channel_id = getString(R.string.firebase_notification_channel_id)
         }
 
-        val requestBody = RequestBody.create("application/json; charset=utf8".toMediaTypeOrNull(),
+        val requestBody = RequestBody.create("application/json; charset=utf8".toMediaType(),
             gson.toJson(notificationModel))
 
         val request = Request.Builder()
