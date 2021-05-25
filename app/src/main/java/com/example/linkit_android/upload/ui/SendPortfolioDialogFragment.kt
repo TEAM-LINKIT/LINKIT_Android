@@ -84,7 +84,7 @@ class SendPortfolioDialogFragment : DialogFragment() {
 
     private fun pushPortfolioToDestUid() {
         val timeStamp = Timestamp(System.currentTimeMillis()).time.toString()
-        val notificationListModel = NotificationListModel(uid, postingId, false)
+        val notificationListModel = NotificationListModel(uid, postingTitle, false)
         databaseReference.child("users").child(destUid).child("notification")
                 .child(timeStamp).setValue(notificationListModel).addOnSuccessListener { sendFcm() }
     }
