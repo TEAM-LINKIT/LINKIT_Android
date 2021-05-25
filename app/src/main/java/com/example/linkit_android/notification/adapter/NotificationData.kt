@@ -4,5 +4,6 @@ data class NotificationData (
     val profileImg: String,
     val name: String,
     val part: String,
-    val title: String
+    val content: CharSequence,
+    val read: Boolean
 )
