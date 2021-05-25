@@ -137,9 +137,10 @@
                         app:layout_constraintWidth_percent="0.4305" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout2"
+                        android:id="@+id/constraintLayout_exist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -170,10 +171,9 @@
                             android:fontFamily="@font/notosanskrbold"
                             android:includeFontPadding="false"
                             android:letterSpacing="-0.03"
-                            android:text="김영만님의 제안을 확인해보세요!"
                             android:textColor="@color/white"
                             android:textSize="15dp"
-                            app:layout_constraintEnd_toStartOf="@+id/circleImageView"
+                            app:layout_constraintEnd_toStartOf="@+id/circleImageView_notification_profile"
                             app:layout_constraintStart_toStartOf="@+id/textView"
                             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -216,12 +216,11 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/circleImageView"
+                            android:id="@+id/circleImageView_notification_profile"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginEnd="22dp"
                             android:layout_marginRight="22dp"
-                            android:src="@drawable/img_cat"
                             app:layout_constraintBottom_toBottomOf="@+id/btn_notification_portfolio"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"

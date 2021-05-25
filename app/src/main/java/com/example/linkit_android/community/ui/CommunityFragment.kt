@@ -21,6 +21,7 @@ import com.example.linkit_android.community.adapter.CommunityAdapter
 import com.example.linkit_android.community.adapter.CommunityData
 import com.example.linkit_android.databinding.FragmentCommunityBinding
 import com.example.linkit_android.model.PostingModel
+import com.example.linkit_android.notification.ui.NotificationActivity
 import com.example.linkit_android.upload.ui.PostingActivity
 import com.example.linkit_android.upload.ui.UploadActivity
 import com.example.linkit_android.util.ItemClickListener
@@ -37,6 +38,7 @@ class CommunityFragment : Fragment() {
 
     private var selectPart = -1
 
+    private lateinit var uid: String
     private lateinit var userName: String
     private lateinit var profileImg: String
     private var userPart = -1
@@ -59,6 +61,8 @@ class CommunityFragment : Fragment() {
 
         initProfile()
 
+        checkNotification()
+
         initPartSpinner()
 
         initRecyclerView()
@@ -68,6 +72,7 @@ class CommunityFragment : Fragment() {
 
     private fun setPref() {
         SharedPreferenceController.apply {
+            uid = getUid(requireContext()).toString()
             userName = getUserName(requireContext()).toString()
             profileImg = getProfileImg(requireContext()).toString()
             userPart = getUserPart(requireContext())
@@ -78,6 +83,55 @@ class CommunityFragment : Fragment() {
         binding.apply {
             tvUserName.text = userName
             Glide.with(requireContext()).load(profileImg).into(imgProfile)
+        }
+    }
+
+    private fun checkNotification() {
+        databaseReference.child("users").child(uid).child("notification")
+            .addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (!snapshot.exists()) {
+                        binding.constraintlayoutNone.visibility = View.VISIBLE
+                        binding.constraintLayoutExist.visibility = View.GONE
+                        initBannerUploadBtn()
+                    } else {
+                        for ((count, item) in snapshot.children.withIndex()) {
+                            if (count == snapshot.childrenCount.toInt() - 1) {
+                                val fromUid = item.child("uid").value.toString()
+                                databaseReference.child("users").child(fromUid)
+                                    .addListenerForSingleValueEvent(object: ValueEventListener {
+                                        @SuppressLint("SetTextI18n")
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            val name = snapshot.child("userName").value.toString()
+                                            val profileImg = snapshot.child("profileImg").value.toString()
+                                            binding.tvCheckPortfolio.text = "${name}님의 제안을 확인해보세요!"
+                                            Glide.with(requireContext()).load(profileImg)
+                                                .into(binding.circleImageViewNotificationProfile)
+                                        }
+                                        override fun onCancelled(error: DatabaseError) {}
+                                    })
+                            }
+                        }
+                        binding.constraintLayoutExist.visibility = View.VISIBLE
+                        binding.constraintlayoutNone.visibility = View.GONE
+                        initBannerNotificationBtn()
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
+
+    private fun initBannerUploadBtn() {
+        binding.constraintlayoutNone.setOnClickListener {
+            val intent = Intent(requireContext(), UploadActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun initBannerNotificationBtn() {
+        binding.constraintLayoutExist.setOnClickListener {
+            val intent = Intent(requireContext(), NotificationActivity::class.java)
+            startActivity(intent)
         }
     }
 
