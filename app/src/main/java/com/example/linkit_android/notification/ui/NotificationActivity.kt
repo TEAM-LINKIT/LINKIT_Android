@@ -1,5 +1,6 @@
 package com.example.linkit_android.notification.ui
 
+import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,15 +8,19 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkit_android.databinding.ActivityNotificationBinding
 import com.example.linkit_android.model.NotificationListModel
 import com.example.linkit_android.model.UserModel
 import com.example.linkit_android.notification.adapter.NotificationAdapter
 import com.example.linkit_android.notification.adapter.NotificationData
+import com.example.linkit_android.profile.ui.ProfileActivity
+import com.example.linkit_android.util.ItemClickListener
 import com.example.linkit_android.util.SharedPreferenceController
 import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
+import java.util.*
 
 class NotificationActivity : AppCompatActivity() {
 
@@ -23,6 +28,7 @@ class NotificationActivity : AppCompatActivity() {
 
     private lateinit var notificationAdapter: NotificationAdapter
     private lateinit var notificationList: MutableList<NotificationListModel>
+    private lateinit var notificationKeyList: MutableList<String>
     private lateinit var userList: MutableList<UserModel>
 
     private lateinit var uid: String
@@ -36,8 +42,6 @@ class NotificationActivity : AppCompatActivity() {
         setViewBinding()
 
         setPref()
-
-        initNotificationRecyclerView()
 
         initBackBtn()
     }
@@ -64,13 +68,16 @@ class NotificationActivity : AppCompatActivity() {
     private fun getNotificationData() {
         notificationList = mutableListOf()
         notificationList.clear()
+        notificationKeyList = mutableListOf()
+        notificationKeyList.clear()
         databaseReference.child("users").child(uid).child("notification")
-                .addValueEventListener(object: ValueEventListener {
+                .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             for (item in snapshot.children) {
                                 val notificationData = item.getValue(NotificationListModel::class.java)
                                 notificationList.add(notificationData!!)
+                                notificationKeyList.add(item.key.toString())
                             }
                             getNotificationUserProfile()
                         }
@@ -87,8 +94,12 @@ class NotificationActivity : AppCompatActivity() {
                     .addListenerForSingleValueEvent(object: ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             userList.add(snapshot.getValue(UserModel::class.java)!!)
-                            if (count == notificationList.size - 1)
+                            if (count == notificationList.size - 1) {
+                                userList.reverse()
+                                notificationKeyList.reverse()
+                                notificationList.reverse()
                                 bindDataToRecyclerView()
+                            }
                         }
                         override fun onCancelled(error: DatabaseError) {}
                     })
@@ -105,6 +116,7 @@ class NotificationActivity : AppCompatActivity() {
                             getNotificationContent(item.userName!!, notificationList[i].postingTitle!!),
                             notificationList[i].read!!))
         notificationAdapter.notifyDataSetChanged()
+        initItemClickListener()
     }
 
     private fun getNotificationContent(userName: String, title: String) : CharSequence {
@@ -130,9 +142,27 @@ class NotificationActivity : AppCompatActivity() {
         return notificationContent
     }
 
+    private fun initItemClickListener() {
+        notificationAdapter.setItemClickListener(object: ItemClickListener {
+            override fun onClickItem(view: View, position: Int) {
+                val destUid = userList[position].uid
+                val intent = Intent(this@NotificationActivity, ProfileActivity::class.java)
+                intent.putExtra("writerId", destUid)
+                databaseReference.child("users").child(uid).child("notification")
+                        .child(notificationKeyList[position]).child("read").setValue(true)
+                        .addOnSuccessListener { startActivity(intent) }
+            }
+        })
+    }
+
     private fun initBackBtn() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initNotificationRecyclerView()
     }
 }
