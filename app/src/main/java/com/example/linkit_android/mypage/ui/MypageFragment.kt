@@ -42,14 +42,14 @@ class MypageFragment : Fragment() {
     }
 
     private fun initMypage() {
-        val name = SharedPreferenceController.getUserName(context!!).toString()
-        val part = SharedPreferenceController.getUserPart(context!!)
-        val profileImg = SharedPreferenceController.getProfileImg(context!!).toString()
+        val name = SharedPreferenceController.getUserName(requireContext()).toString()
+        val part = SharedPreferenceController.getUserPart(requireContext())
+        val profileImg = SharedPreferenceController.getProfileImg(requireContext()).toString()
 
         binding.tvUserName.text = name
         binding.tvPart.text = getPartString(part)
 
-        Glide.with(context!!).load(profileImg).into(binding.imgProfile)
+        Glide.with(requireContext()).load(profileImg).into(binding.imgProfile)
     }
 
     private fun initWriteListBtn() {
@@ -69,8 +69,6 @@ class MypageFragment : Fragment() {
     private fun initLogoutBtn() {
         binding.btnLogout.setOnClickListener {
             val logoutDialog = LogoutDialogFragment()
-            val args = Bundle()
-            logoutDialog.arguments = args
             logoutDialog.show(childFragmentManager, "withdrawal_dialog")
         }
     }
@@ -78,8 +76,6 @@ class MypageFragment : Fragment() {
     private fun initWithdrawalBtn() {
         binding.btnWithdraw.setOnClickListener {
             val withdrawalDialog = WithdrawalDialogFragment()
-            val args = Bundle()
-            withdrawalDialog.arguments = args
             withdrawalDialog.show(childFragmentManager, "withdrawal_dialog")
         }
     }
