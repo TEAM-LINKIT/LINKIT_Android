@@ -42,6 +42,8 @@ class UploadActivity : AppCompatActivity() {
         initAddPartBtn()
 
         initUploadBtn()
+
+        initBackBtn()
     }
 
     private fun setViewBinding() {
@@ -171,6 +173,12 @@ class UploadActivity : AppCompatActivity() {
                     Toast.makeText(this, "정상적으로 글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
                     finish()
                 }
+    }
+
+    private fun initBackBtn() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     companion object {
