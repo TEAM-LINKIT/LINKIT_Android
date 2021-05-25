@@ -8,11 +8,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.linkit_android.chatting.ui.ChatRoomActivity
 import com.example.linkit_android.databinding.ActivityProfileBinding
 import com.example.linkit_android.portfolio.adapter.ProjectAdapter
 import com.example.linkit_android.portfolio.adapter.ProjectData
 import com.example.linkit_android.portfolio.adapter.TagAdapter
-import com.example.linkit_android.upload.ui.PostingActivity
 import com.example.linkit_android.util.SharedPreferenceController
 import com.example.linkit_android.util.getPartString
 import com.google.android.flexbox.FlexDirection
@@ -41,7 +41,6 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var intent = getIntent()
         writerId = intent.getStringExtra("writerId").toString()
 
         setViewBinding()
@@ -55,6 +54,8 @@ class ProfileActivity : AppCompatActivity() {
         initRecommendRecyclerView()
 
         initBackBtn()
+
+        initChatBtn()
 
         initRecommendBtn()
 
@@ -72,19 +73,26 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initBackBtn() {
         binding.btnBack.setOnClickListener {
-            var intent = Intent(this, PostingActivity::class.java)
             finish()
         }
     }
 
+    private fun initChatBtn() {
+        binding.btnChat.setOnClickListener {
+            val intent = Intent(this, ChatRoomActivity::class.java)
+            intent.putExtra("chatRoomId", writerId)
+            startActivity(intent)
+        }
+    }
+
     private fun initRecommendBtn() {
-        val uid = SharedPreferenceController.getUid(this!!).toString()
+        val uid = SharedPreferenceController.getUid(this).toString()
         binding.btnRecommend.setOnClickListener {
             if (writerId == uid) {
                 Toast.makeText(this, "자기자신을 추천할 수 없습니다", Toast.LENGTH_SHORT).show()
             }
             else {
-                val intent = Intent(this!!, RecommendActivity::class.java)
+                val intent = Intent(this, RecommendActivity::class.java)
                 intent.putExtra("writerId", writerId)
                 startActivityForResult(intent, 1)
             }
@@ -92,7 +100,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initRecommendComment(writername : String) {
-        val username = SharedPreferenceController.getUserName(this!!).toString()
+        val username = SharedPreferenceController.getUserName(this).toString()
 
         binding.tvRecommend.text = username + "님,\n" + writername + "님을 추천해주세요."
     }
@@ -145,7 +153,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun initProjectRecyclerView() {
         val projectList = mutableListOf<ProjectData>()
 
-        projectAdapter = ProjectAdapter(this!!)
+        projectAdapter = ProjectAdapter(this)
 
         binding.recyclerviewProject.apply {
             adapter = projectAdapter

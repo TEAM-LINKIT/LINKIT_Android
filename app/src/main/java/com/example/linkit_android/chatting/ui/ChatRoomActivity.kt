@@ -26,9 +26,12 @@ class ChatRoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
 
     private lateinit var uid: String
+    private lateinit var userName: String
+
     private lateinit var destUid: String
     private lateinit var destUserName: String
     private lateinit var destPushToken: String
+
     private var chatRoomId: String? = null
 
     private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -65,6 +68,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
     private fun setPref() {
         uid = SharedPreferenceController.getUid(this).toString()
+        userName = SharedPreferenceController.getUserName(this).toString()
     }
 
     private fun setOpponentProfile() {
@@ -181,13 +185,13 @@ class ChatRoomActivity : AppCompatActivity() {
 
         notificationModel.apply {
             to = destPushToken
-            notification.title = destUserName
+            notification.title = userName
             notification.body = pushMessage
             notification.data = uid
             notification.android_channel_id = getString(R.string.firebase_notification_channel_id)
         }
         notificationModel.data.apply {
-            title = destUserName
+            title = userName
             text = pushMessage
             data = uid
             android_channel_id = getString(R.string.firebase_notification_channel_id)
