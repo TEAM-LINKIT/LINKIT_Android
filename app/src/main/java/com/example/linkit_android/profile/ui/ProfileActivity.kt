@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.linkit_android.databinding.ActivityProfileBinding
@@ -13,6 +14,7 @@ import com.example.linkit_android.portfolio.adapter.ProjectData
 import com.example.linkit_android.portfolio.adapter.TagAdapter
 import com.example.linkit_android.upload.ui.PostingActivity
 import com.example.linkit_android.util.SharedPreferenceController
+import com.example.linkit_android.util.getPartString
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -60,7 +62,6 @@ class ProfileActivity : AppCompatActivity() {
 
         getTagDataFromFirebase()
 
-        initRecommendComment()
     }
 
     private fun setViewBinding() {
@@ -77,30 +78,31 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initRecommendBtn() {
-        binding.imgThumb.setOnClickListener {
-            val intent = Intent(this!!, RecommendActivity::class.java)
-            intent.putExtra("writerId", writerId)
-            startActivityForResult(intent, 1)
+        val uid = SharedPreferenceController.getUid(this!!).toString()
+        binding.btnRecommend.setOnClickListener {
+            if (writerId == uid) {
+                Toast.makeText(this, "자기자신을 추천할 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val intent = Intent(this!!, RecommendActivity::class.java)
+                intent.putExtra("writerId", writerId)
+                startActivityForResult(intent, 1)
+            }
         }
     }
 
-    private fun initRecommendComment() {
-        val uid = SharedPreferenceController.getUid(this!!).toString()
+    private fun initRecommendComment(writername : String) {
+        val username = SharedPreferenceController.getUserName(this!!).toString()
 
-        databaseReference.child("users").addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                binding.tvRecommend.text = snapshot.child(uid).child("userName").value.toString() +
-                        "님,\n" + snapshot.child(writerId).child("userName").value.toString() + "님을 추천해주세요."
-            }
-            override fun onCancelled(error: DatabaseError) {}
-        })
+        binding.tvRecommend.text = username + "님,\n" + writername + "님을 추천해주세요."
     }
 
     private fun initProfile() {
         databaseReference.child("users").child(writerId).addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        val writerName = snapshot.child("userName").value.toString()
 
-                        binding.tvName.text = snapshot.child("userName").value.toString()
+                        binding.tvName.text = writerName
 
                         /* 자기소개 불러오기 */
 
@@ -130,22 +132,10 @@ class ProfileActivity : AppCompatActivity() {
                             binding.tvSchool.visibility = View.VISIBLE
                         }
 
-                        when(snapshot.child("userPart").value.toString()) {
-                            "0" -> {
-                                binding.tvPart.text = "기획"
-                            }
-                            "1" -> {
-                                binding.tvPart.text = "디자인"
-                            }
-                            "2" -> {
-                                binding.tvPart.text = "프론트엔드 개발"
-                            }
-                            "3" -> {
-                                binding.tvPart.text = "백엔드 개발"
-                            }
-                        }
+                        binding.tvPart.text = getPartString(snapshot.child("userPart").value.toString().toInt())
 
                         Glide.with(this@ProfileActivity).load(snapshot.child("profileImg").value.toString()).into(binding.imgProfile)
+                        initRecommendComment(writerName)
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
