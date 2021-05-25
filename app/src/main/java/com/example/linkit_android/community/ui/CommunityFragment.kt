@@ -117,7 +117,7 @@ class CommunityFragment : Fragment() {
 
     private fun getPostingData(position: Int) {
         selectPart = position
-        databaseReference.child("community").addListenerForSingleValueEvent(object: ValueEventListener {
+        databaseReference.child("community").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 postingList.clear()
                 for (data in snapshot.children) {

@@ -4,14 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.linkit_android.community.ui.CommunityFragment
 import com.example.linkit_android.databinding.ActivityPostingBinding
-import com.example.linkit_android.portfolio.ui.PortfolioFragment
 import com.example.linkit_android.profile.ui.ProfileActivity
-import com.example.linkit_android.util.ItemClickListener
+import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_posting.*
 
@@ -24,11 +21,12 @@ class PostingActivity : AppCompatActivity() {
 
     private lateinit var postingId : String
     private lateinit var writerId : String
+    private lateinit var destPushToken: String
+    private lateinit var postingTitle: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var intent = getIntent()
         postingId = intent.getStringExtra("postingId").toString()
 
         setViewBinding()
@@ -51,13 +49,17 @@ class PostingActivity : AppCompatActivity() {
     private fun initApplyBtn() {
         binding.btnApply.setOnClickListener {
             val sendPortfolioDialog = SendPortfolioDialogFragment()
+            val args = Bundle()
+            val array = arrayListOf(writerId, destPushToken, postingId, postingTitle)
+            args.putStringArrayList("destUserInfo", array)
+            sendPortfolioDialog.arguments = args
             sendPortfolioDialog.show(supportFragmentManager, "send_portfolio_dialog")
         }
     }
 
     private fun initBackBtn() {
         binding.btnBack.setOnClickListener {
-            var intent = Intent(this, CommunityFragment::class.java)
+            val intent = Intent(this, CommunityFragment::class.java)
             setResult(Activity.RESULT_CANCELED, intent)
             finish()
         }
@@ -65,8 +67,8 @@ class PostingActivity : AppCompatActivity() {
 
     private fun initWriterProfileBtn() {
         binding.imgWriterProfile.setOnClickListener {
-            val intent = Intent(this!!, ProfileActivity::class.java)
-            intent.putExtra("writerId", writerId )
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("writerId", writerId)
             startActivity(intent)
         }
     }
@@ -85,6 +87,8 @@ class PostingActivity : AppCompatActivity() {
                         binding.tvCountFrontend.text = snapshot.child("recruitNum").child("2").value.toString() + "명"
                         binding.tvCountBackend.text = snapshot.child("recruitNum").child("3").value.toString() + "명"
                         binding.tvContent.text = snapshot.child("content").value.toString()
+
+                        postingTitle = snapshot.child("title").value.toString()
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
@@ -95,24 +99,9 @@ class PostingActivity : AppCompatActivity() {
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         binding.tvWriterName.text = snapshot.child("userName").value.toString()
-
                         Glide.with(this@PostingActivity).load(snapshot.child("profileImg").value.toString()).into(binding.imgWriterProfile)
-
-
-                        when(snapshot.child("userPart").value.toString()) {
-                            "0" -> {
-                                binding.tvWriterPart.text = "기획"
-                            }
-                            "1" -> {
-                                binding.tvWriterPart.text = "디자인"
-                            }
-                            "2" -> {
-                                binding.tvWriterPart.text = "프론트엔드 개발"
-                            }
-                            "3" -> {
-                                binding.tvWriterPart.text = "백엔드 개발"
-                            }
-                        }
+                        binding.tvWriterPart.text = getPartString(snapshot.child("userPart").value.toString().toInt())
+                        destPushToken = snapshot.child("pushToken").value.toString()
                     }
                     override fun onCancelled(error: DatabaseError) {}
                 })
