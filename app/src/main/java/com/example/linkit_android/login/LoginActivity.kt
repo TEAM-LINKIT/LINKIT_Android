@@ -53,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             uid = it.result?.user?.uid!!
                             getUserInfo()
-                            goToMainActivity()
                         }  else {
                             Toast.makeText(this, "가입되지 않은 회원입니다", Toast.LENGTH_SHORT).show()
                             Log.d("LoginActivity", it.exception?.message!!)
@@ -93,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
             setProfileImg(applicationContext, profileImg)
             setPushToken(applicationContext, pushToken)
         }
+        goToMainActivity()
     }
 
     private fun goToMainActivity() {

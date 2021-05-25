@@ -241,16 +241,6 @@ class CommunityFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        updateData()
-    }
-
-    private fun updateData() {
-        getPostingData(binding.spinnerPart.selectedItemPosition)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
