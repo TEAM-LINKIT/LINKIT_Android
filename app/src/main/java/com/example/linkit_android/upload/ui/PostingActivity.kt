@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.linkit_android.community.ui.CommunityFragment
 import com.example.linkit_android.databinding.ActivityPostingBinding
 import com.example.linkit_android.profile.ui.ProfileActivity
+import com.example.linkit_android.util.SharedPreferenceController
 import com.example.linkit_android.util.getPartString
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_posting.*
@@ -18,6 +20,8 @@ class PostingActivity : AppCompatActivity() {
 
     private val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference : DatabaseReference = firebaseDatabase.reference
+
+    private lateinit var uid: String
 
     private lateinit var postingId : String
     private lateinit var writerId : String
@@ -30,6 +34,8 @@ class PostingActivity : AppCompatActivity() {
         postingId = intent.getStringExtra("postingId").toString()
 
         setViewBinding()
+
+        setPref()
 
         initApplyBtn()
 
@@ -46,14 +52,22 @@ class PostingActivity : AppCompatActivity() {
         setContentView(view)
     }
 
+    private fun setPref() {
+        uid = SharedPreferenceController.getUid(this).toString()
+    }
+
     private fun initApplyBtn() {
         binding.btnApply.setOnClickListener {
-            val sendPortfolioDialog = SendPortfolioDialogFragment()
-            val args = Bundle()
-            val array = arrayListOf(writerId, destPushToken, postingId, postingTitle)
-            args.putStringArrayList("destUserInfo", array)
-            sendPortfolioDialog.arguments = args
-            sendPortfolioDialog.show(supportFragmentManager, "send_portfolio_dialog")
+            if (uid == writerId) {
+                Toast.makeText(this, "자신이 작성한 글에는 지원할 수 없습니다", Toast.LENGTH_SHORT).show()
+            } else {
+                val sendPortfolioDialog = SendPortfolioDialogFragment()
+                val args = Bundle()
+                val array = arrayListOf(writerId, destPushToken, postingId, postingTitle)
+                args.putStringArrayList("destUserInfo", array)
+                sendPortfolioDialog.arguments = args
+                sendPortfolioDialog.show(supportFragmentManager, "send_portfolio_dialog")
+            }
         }
     }
 
