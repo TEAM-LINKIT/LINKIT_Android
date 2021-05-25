@@ -7,7 +7,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.example.linkit_android.community.ui.CommunityFragment
 import com.example.linkit_android.databinding.ActivityPostingBinding
+import com.example.linkit_android.portfolio.ui.PortfolioFragment
+import com.example.linkit_android.profile.ui.ProfileActivity
+import com.example.linkit_android.util.ItemClickListener
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_posting.*
 
@@ -19,6 +23,7 @@ class PostingActivity : AppCompatActivity() {
     private val databaseReference : DatabaseReference = firebaseDatabase.reference
 
     private lateinit var postingId : String
+    private lateinit var writerId : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,10 @@ class PostingActivity : AppCompatActivity() {
         initApplyBtn()
 
         setPost()
+
+        initBackBtn()
+
+        initWriterProfileBtn()
     }
 
     private fun setViewBinding() {
@@ -46,8 +55,23 @@ class PostingActivity : AppCompatActivity() {
         }
     }
 
+    private fun initBackBtn() {
+        binding.btnBack.setOnClickListener {
+            var intent = Intent(this, CommunityFragment::class.java)
+            setResult(Activity.RESULT_CANCELED, intent)
+            finish()
+        }
+    }
+
+    private fun initWriterProfileBtn() {
+        binding.imgWriterProfile.setOnClickListener {
+            val intent = Intent(this!!, ProfileActivity::class.java)
+            intent.putExtra("writerId", writerId )
+            startActivity(intent)
+        }
+    }
+
     private fun setPost() {
-        var writerId : String
         databaseReference.child("community").child(postingId)
                 .addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

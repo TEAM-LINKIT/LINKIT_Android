@@ -39,7 +39,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/img_cat"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +81,6 @@
                 android:fontFamily="@font/notosanskrbold"
                 android:includeFontPadding="false"
                 android:letterSpacing="-0.03"
-                android:text="강희원"
                 android:textColor="@color/white"
                 android:textSize="21dp"
                 app:layout_constraintEnd_toEndOf="@+id/img_profile"
@@ -102,7 +100,6 @@
                 android:paddingHorizontal="8dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="4dp"
-                android:text="프론트엔드 개발"
                 android:textColor="@color/white"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -159,7 +156,6 @@
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
                     android:lineSpacingExtra="-2dp"
-                    android:text="안녕하세요! 저는 숙명여자대학교 컴퓨터과학전공 7학기 재학 중인 강희원입니다. Android, Kotlin에 관심이 많습니다."
                     android:textColor="@color/black_content"
                     android:textSize="13dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -244,7 +240,6 @@
                         android:fontFamily="@font/notosanskrregular"
                         android:includeFontPadding="false"
                         android:letterSpacing="-0.03"
-                        android:text="숙명여자대학교"
                         android:textColor="@color/black_content"
                         android:textSize="13dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -258,7 +253,6 @@
                         android:fontFamily="@font/notosanskrregular"
                         android:includeFontPadding="false"
                         android:letterSpacing="-0.03"
-                        android:text="소프트웨어학부 컴퓨터과학전공"
                         android:textColor="@color/gray_content"
                         android:textSize="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -622,7 +616,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/tv_recommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -641,6 +635,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:id="@+id/img_thumb"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="15dp"
