@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.linkit_android.chatting.ui.ChatRoomActivity
 import com.example.linkit_android.databinding.FragmentMypageBinding
+import com.example.linkit_android.portfolio.ui.ToolDialogFragment
+import com.example.linkit_android.upload.ui.SendPortfolioDialogFragment
 import com.example.linkit_android.util.SharedPreferenceController
 import com.example.linkit_android.util.getPartString
 
@@ -33,6 +35,10 @@ class MypageFragment : Fragment() {
         initWriteListBtn()
 
         initRecommendListBtn()
+
+        initWithdrawalBtn()
+
+        initLogoutBtn()
     }
 
     private fun initMypage() {
@@ -57,6 +63,24 @@ class MypageFragment : Fragment() {
         binding.btnRecommendList.setOnClickListener {
             val intent = Intent(context, RecommendListActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun initLogoutBtn() {
+        binding.btnLogout.setOnClickListener {
+            val logoutDialog = LogoutDialogFragment()
+            val args = Bundle()
+            logoutDialog.arguments = args
+            logoutDialog.show(childFragmentManager, "withdrawal_dialog")
+        }
+    }
+
+    private fun initWithdrawalBtn() {
+        binding.btnWithdraw.setOnClickListener {
+            val withdrawalDialog = WithdrawalDialogFragment()
+            val args = Bundle()
+            withdrawalDialog.arguments = args
+            withdrawalDialog.show(childFragmentManager, "withdrawal_dialog")
         }
     }
 
