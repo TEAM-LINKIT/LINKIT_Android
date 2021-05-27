@@ -46,7 +46,6 @@ class PostingListActivity : AppCompatActivity() {
     private fun initBackBtn() {
         binding.btnBack.setOnClickListener {
             var intent = Intent(this, MypageFragment::class.java)
-            setResult(Activity.RESULT_CANCELED, intent)
             finish()
         }
     }
@@ -54,8 +53,8 @@ class PostingListActivity : AppCompatActivity() {
     private fun initPostingListRecyclerView() {
         val uid = SharedPreferenceController.getUid(this).toString()
         val uname = SharedPreferenceController.getUserName(this).toString()
+        var date = ""
         var nullCheck = false
-        lateinit var date : String
 
         val postingList = mutableListOf<PostingListData>()
 
@@ -67,27 +66,26 @@ class PostingListActivity : AppCompatActivity() {
         }
 
         databaseReference.child("community").addListenerForSingleValueEvent(object: ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        for(item in snapshot.children) {
-                            if(uid == item.child("writer").value.toString()) {
-                                date = getDate(item.key!!.toLong())
-                                postingList.add(PostingListData(item.child("title").value.toString(), "$uname · $date"))
-                                nullCheck = true
-                            }
-                        }
-                        if(!nullCheck) {
-                            binding.recyclerviewPostingList.visibility = View.GONE
-                        }
-                        postingListAdapter.data = postingList
-                        postingListAdapter.notifyDataSetChanged()
-
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(item in snapshot.children) {
+                    if(uid == item.child("writer").value.toString()) {
+                        date = getDate(item.key!!.toLong())
+                        postingList.add(PostingListData(item.child("title").value.toString(), "$uname · $date"))
+                        nullCheck = true
                     }
-                    override fun onCancelled(error: DatabaseError) {}
+                }
+                if(!nullCheck) {
+                    binding.recyclerviewPostingList.visibility = View.GONE
+                }
+                postingListAdapter.data = postingList
+                postingListAdapter.notifyDataSetChanged()
+            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
     private fun getDate(timestamp: Long) :String {
-        val date = DateFormat.format("yyyy-MM-dd",timestamp).toString()
+        val date = DateFormat.format("yyyy.MM.dd",timestamp).toString()
         return date
     }
 }
