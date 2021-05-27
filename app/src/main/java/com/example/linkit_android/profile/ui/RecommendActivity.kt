@@ -65,6 +65,7 @@ class RecommendActivity : AppCompatActivity() {
     private fun pushRecommendToServer() {
         val simpleDateForm = SimpleDateFormat("yyyyMMddhhmmss")
         val recommendName = simpleDateForm.format(Date())
+        val upart = SharedPreferenceController.getUserPart(this).toString()
         val uid = SharedPreferenceController.getUid(this).toString()
         lateinit var recommenddata : ProjectData
         databaseReference.child("users").addListenerForSingleValueEvent(object: ValueEventListener {
@@ -75,6 +76,8 @@ class RecommendActivity : AppCompatActivity() {
 
                         databaseReference.child("users").child(writerId).child("recommend")
                                 .child(recommendName).setValue(recommenddata)
+                        databaseReference.child("users").child(writerId).child("recommend")
+                                .child(recommendName).child("writerpart").setValue(upart)
 
                         goToProfileActivity()
 
