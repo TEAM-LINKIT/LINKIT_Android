@@ -40,7 +40,6 @@ class RecommendListActivity : AppCompatActivity() {
 
     private fun initBackBtn() {
         binding.btnBack.setOnClickListener {
-            var intent = Intent(this, MypageFragment::class.java)
             finish()
         }
     }
@@ -48,7 +47,7 @@ class RecommendListActivity : AppCompatActivity() {
     private fun initRecommendListRecyclerView() {
         val recommendList = mutableListOf<ChatListData>()
         val uid = SharedPreferenceController.getUid(this).toString()
-        var writerpart : String
+        var writerpart = ""
 
         recommendListAdapter = ChatListAdapter(this)
 
