@@ -1,11 +1,17 @@
 package com.example.linkit_android.mypage.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkit_android.chatting.adapter.ChatListAdapter
 import com.example.linkit_android.chatting.adapter.ChatListData
 import com.example.linkit_android.databinding.ActivityRecommendListBinding
+import com.example.linkit_android.portfolio.adapter.ProjectData
+import com.example.linkit_android.util.SharedPreferenceController
+import com.example.linkit_android.util.getPartString
+import com.google.firebase.database.*
 
 class RecommendListActivity : AppCompatActivity() {
 
@@ -13,10 +19,15 @@ class RecommendListActivity : AppCompatActivity() {
 
     private lateinit var recommendListAdapter: ChatListAdapter
 
+    private val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference : DatabaseReference = firebaseDatabase.reference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setViewBinding()
+
+        initBackBtn()
 
         initRecommendListRecyclerView()
     }
@@ -27,7 +38,18 @@ class RecommendListActivity : AppCompatActivity() {
         setContentView(view)
     }
 
+    private fun initBackBtn() {
+        binding.btnBack.setOnClickListener {
+            var intent = Intent(this, MypageFragment::class.java)
+            finish()
+        }
+    }
+
     private fun initRecommendListRecyclerView() {
+        val recommendList = mutableListOf<ChatListData>()
+        val uid = SharedPreferenceController.getUid(this).toString()
+        var writerpart : String
+
         recommendListAdapter = ChatListAdapter(this)
 
         binding.recyclerviewRecommend.apply {
@@ -35,14 +57,23 @@ class RecommendListActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@RecommendListActivity)
         }
 
-        recommendListAdapter.apply {
-            data = mutableListOf(
-                ChatListData("https://cdn.pixabay.com/photo/2020/03/18/19/17/easter-4945288_1280.jpg",
-                    "김영만", "프론트엔드 개발", "강희원님을 추천합니다."),
-                ChatListData("https://cdn.pixabay.com/photo/2021/03/02/20/21/hare-6063733_1280.jpg",
-                    "고구마", "백엔드 개발", "재미있게 프로젝트 했습니다.")
-            )
-            notifyDataSetChanged()
+        databaseReference.child("users").child(uid).child("recommend")
+                .addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.exists()) {
+                            binding.recyclerviewRecommend.visibility = View.GONE
+                        }
+                        else {
+                            for(item in snapshot.children) {
+                                writerpart = getPartString(item.child("writerpart").value.toString().toInt())
+                                recommendList.add(ChatListData(item.child("projectImg").value.toString(), item.child("title").value.toString(),
+                                        writerpart, item.child("content").value.toString()))
+                            }
+                            recommendListAdapter.data = recommendList
+                            recommendListAdapter.notifyDataSetChanged()
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
         }
     }
-}
