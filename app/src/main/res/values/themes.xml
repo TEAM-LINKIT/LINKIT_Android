@@ -26,6 +26,12 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
+    <!-- splash status bar -->
+    <style name="Theme.SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="m">@color/red_splash</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
     <!-- NumberPicker theme -->
     <style name="NumberPickerTheme">
         <item name="android:textSize">17dp</item>

@@ -27,4 +27,5 @@
     <color name="gray_stepper">#D7D7D7</color>
     <color name="gray_stepper_divider">#F6F6F6</color>
     <color name="gray_underline">#F1F1F1</color>
+    <color name="red_splash">#FB8C86</color>
 </resources>

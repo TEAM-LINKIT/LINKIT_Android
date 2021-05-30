@@ -17,9 +17,17 @@
         android:roundIcon="@mipmap/ic_launcher_main"
         android:supportsRtl="true"
         android:theme="@style/Theme.LINKIT_Android">
+        <activity android:name=".splash.ui.SplashActivity"
+            android:theme="@style/Theme.SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".notification.ui.NotificationActivity"
-            android:theme="@style/Theme.WhiteTheme"/>
+            android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".portfolio.ui.ProjectActivity"
             android:theme="@style/Theme.WhiteTheme" />
@@ -43,13 +51,7 @@
             android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".login.LoginActivity"
-            android:theme="@style/Theme.RedTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.RedTheme" />
         <activity
             android:name=".chatting.ui.ChatRoomActivity"
             android:theme="@style/Theme.WhiteTheme" />
@@ -70,7 +72,7 @@
             android:theme="@style/Theme.WhiteTheme" />
         <activity
             android:name=".main.ui.MainActivity"
-            android:theme="@style/Theme.WhiteTheme"/>
+            android:theme="@style/Theme.WhiteTheme" />
         <service android:name=".util.MyFirebaseMessagingService"
             android:exported="false"
             android:stopWithTask="false">
