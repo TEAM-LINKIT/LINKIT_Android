@@ -187,10 +187,10 @@ class CommunityFragment : Fragment() {
 
     private fun bindData() {
         communityAdapter.data = mutableListOf()
+        postingList.reverse()
         for (data in postingList) {
             communityAdapter.data.add(CommunityData(data.title!!, setPartListData(data.recruitNum!!)))
         }
-        communityAdapter.data.reverse()
         communityAdapter.notifyDataSetChanged()
         initItemClickListener()
     }
